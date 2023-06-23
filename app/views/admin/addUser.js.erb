@@ -1,0 +1,74 @@
+$('#total-user-count').text(<%= @total_user %>)
+$('#close-modal').trigger('click')
+$('#employee_list').append(`<tr>
+                  <td><%=@user.name+" "+@user.surname%></td>
+                  <td><%=@user.roles%></td>
+                  <td>10</td>
+                  <td>10</td>
+                </tr>`)
+$('#employee_list_2').append(`<tr id="<%= @user.id%>">
+                <td><%=@user.name+" "+@user.surname%></td>
+                <td id="roles-<%=@user.id%>"><%=@user.roles%></td>
+                <td>
+                  <div>
+                    <% if @user.employee? %>
+                    <button type="button" id="make-hrd-<%=@user.id%>" class="btn btn-outline-primary make-hr" value="<%= @user.id%>" >
+                      Make HRD
+                    </button>
+                    <% end %>
+                    <% if @user.HRD? || @user.employee? %>
+                    <button type="button" id="make-admin-<%=@user.id%>" class="btn btn-outline-primary make-admin" value="<%= @user.id%>">
+                      Make Admin
+                    </button>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>`)
+
+$('.make-hr').on('click',function(){
+
+  makeHR($(this).val())
+  
+})
+
+$('.make-admin').on('click',function(){
+
+  makeAdmin($(this).val())
+
+})
+
+function makeAdmin(_id){
+
+  $.ajax({
+
+    url:'/admin/makeAdmin',
+    method:'POST',
+    data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+      show_toast("Admin created successfully")
+    },
+    error:function(err){
+
+    }
+
+  })
+
+}
+
+function makeHR(_id){
+
+
+  $.ajax({
+
+    url:'/admin/makeHr',
+    method:'POST',
+    data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+      show_toast("HRD created successfully")
+    },
+    error:function(err){
+      
+    }
+
+  })
+}

@@ -1,0 +1,45 @@
+<div
+  class="modal fade"
+  id="addTaskCategoriesModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Task Categories</h5>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group" id="task-list">
+          <% @all_task_categories.each do |item| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center" id="task-<%=item.id%>">
+            <%= item.task_name %>
+            <i class="fa fa-trash btn btn-danger del-task-category" value="<%= item.id%>"></i>
+          </li>
+          <% end %>
+        </ul>
+
+        <div class="form-group mt-3">
+          <input
+            type="text"
+            class="form-control"
+            id="input-category"
+            placeholder="Task Category Name" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          id="close-modal-task-category">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" id="add-task-caregory">
+          Add Category
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

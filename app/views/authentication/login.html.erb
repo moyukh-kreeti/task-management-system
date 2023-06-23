@@ -1,0 +1,36 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title text-center">Login</h1>
+          <p class="text-center" style="font-size:1.5rem">Welcome to task management system try to login here with Google Account</p>
+          <div style="width:50%;display:flex;justify-content:center;margin:auto;">
+            <%= button_to  '/auth/google_oauth2/',data:{turbo:false},style:"border:none" do%>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width=50/>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <% flash.each do |type, msg| %>
+  <div class="alert alert-<%=type%> text-center" id="flash" role="alert">
+    <%= msg %>
+  </div>
+  <script>
+    function remove_flash(){
+      $(document).ready(function(){
+        setTimeout(function(){
+        
+          $('#flash').fadeOut();
+        }, 5000);
+      })
+    }
+    remove_flash()
+  </script>
+  <% end %>
+</div>
