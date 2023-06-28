@@ -23,12 +23,23 @@ class DashboardController < ApplicationController
 
   def mytask
     @active_window="mytask"
+
+    # There will be some changes here @current user will be used
+    @assigned_mytasks=User.find(39).task.all.where(status:0)
+    @working_mytasks=User.find(39).task.all.where(status:1)
+    @completed_mytasks=User.find(39).task.all.where(status:2)
+
   end
 
   def assigntask
     @active_window="assigntask"
     @task_category=TaskCategory.all
     @all_users||=User.all
+
+    @all_assigned_tasks=Task.all.where(assign_by: @user.employee_id)
+    puts "--------------------------------------------"
+    puts @all_assigned_tasks
+
   end
 
   def adminpanel

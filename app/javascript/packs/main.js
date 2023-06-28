@@ -163,3 +163,86 @@ $('#assign-task-to-user').on('click', function(){
 
 })
 
+$('#assign-task').on('click',function(){
+  let _task_name=$('#task-name').val()
+  let _task_category=$('#task-category').find(":selected").val();
+  let _task_date=$('#task-date').val()
+  let _task_time=$('#task-time').val()
+
+  let _assign_to=$('#assign-to').find(":selected").val()
+  let _task_priority=$('#task-priority').find(":selected").val()
+  let _notification_interval=$('input[name=Interval]:checked').val()
+  let _task_attachment=$('#task-attachment').val()
+
+  var fd = new FormData();
+  var files = $('#task-attachment')[0].files[0];
+  fd.append('file',files);
+  let _sub_task={}
+  var listItems = $("#sub-task-list li");
+  listItems.each(function(idx, li) {
+      var product = $(li).text();
+      _sub_task[idx]=product;
+      
+  });
+
+  const data={
+    task_name:_task_name,
+    task_category:_task_category,
+    task_date:_task_date,
+    task_time:_task_time,
+    assign_to:_assign_to,
+    sub_task:_sub_task,
+    task_importance:_task_priority,
+    notification_interval:_notification_interval
+  }
+
+  console.log(data)
+
+
+  $.ajax({
+    url:'/dashboard/assigntask/tasks',
+    method:'POST',
+    data:{task_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+      // show_toast("Admin created successfully")
+    },
+    error:function(err){
+
+    }
+  })
+
+
+})
+
+
+$('#add-subtask').on('click', function(){
+
+  let sub_task=$('#sub-task-input').val();
+  $('#sub-task-list').append(`<li class="list-group-item d-flex justify-content-between align-items-start">${sub_task} <a class="btn btn-danger"><i class="fa fa-trash"></i></a></li>`);
+  $('#sub-task-input').val('')
+})
+
+$('.task-status-change').on('change', function(){
+
+
+  let data={
+
+    id: $(this)[0].id,
+    status: $(this).val()
+  }
+
+  $.ajax({
+    url:'/tasks/change_task_status',
+    method:'POST',
+    data:{task_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+      
+    },
+    error:function(err){
+
+    }
+  })
+
+
+
+})

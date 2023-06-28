@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'tasks/index'
   get 'assign_task/addTask'
   get 'admin/index'
   root 'dashboard#index'
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
 
   post 'profile/uploadimage'
   
-  get 'dashboard/mytask'
+  get 'dashboard/mytask' 
 
   get 'dashboard/assigntask'
 
@@ -34,5 +35,14 @@ Rails.application.routes.draw do
   post 'admin/addTaskCategories'
 
   delete 'admin/removeTaskCategories'
+
+
+  scope '/dashboard/assigntask' do
+    resources :tasks
+  end
+
+  post 'tasks/change_task_status'
+  
+  
 
 end

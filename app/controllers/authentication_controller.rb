@@ -9,7 +9,7 @@ class AuthenticationController < ApplicationController
     @user=User.find_by_email(user_info.info.email)
     if @user
       flash[:success] = "Welcome User"
-      binding.pry
+      # binding.pry
       @user.employee_id=user_info.uid
       @user.save
       session[:user_id] = @user.employee_id
