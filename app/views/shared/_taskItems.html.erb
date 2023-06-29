@@ -1,4 +1,4 @@
- <li>
+ <li id="task-<%= task.id%>">
   <div class="card mb-4 custom-card2 p-4">
     <h4><%= task.task_name %></h4>
     <div class="card-body" style="padding: 0.5rem;">
@@ -49,14 +49,14 @@
                   <div class="col-6 d-flex align-items-center">
                     <%= subtask.name %>
                   </div>
-                  <div class="col-4 d-flex align-items-center">
-                    <p class="badge profile-text">
+                  <div class="col-4 d-flex align-items-center" id="subtask-status-container-<%= subtask.id%>">
+                    <p class="badge profile-text" id="subtask-status-view-<%= subtask.id%>">
                     <%= subtask.status%>
-                      <span class="dot <%= subtask.status%>"></span>
+                    <span class="dot <%= subtask.status.downcase%>"></span>
                   </p>
                   </div>
                   <div class="col-2 d-flex align-items-center">
-                    <select class="form-select" aria-labelledby="navbarDropdown">
+                    <select class="form-select subtask-status-change" id="<%= subtask.id%>" aria-labelledby="navbarDropdown">
                       <option <%= "selected" if subtask.Assigned? %> value="0">Assigned</option>
                       <option <%= "selected" if subtask.Working? %> value="1">Working</option>
                       <option <%= "selected" if subtask.Completed? %> value="2">Completed</option>

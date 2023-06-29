@@ -42,6 +42,10 @@ Rails.application.routes.draw do
   end
 
   post 'tasks/change_task_status'
+
+  post 'tasks/change_subtask_status'
+
+  get 'tasks/apply_filters'
   
   
 

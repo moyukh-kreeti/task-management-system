@@ -22,9 +22,9 @@
           </ul>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="assigned" role="tabpanel" aria-labelledby="assigned-tab">
-              <%= render partial:"shared/filterNav" %>
+              <%= render partial:"shared/filterNav" ,:locals => {:status => "assigned"}%>
                 <div>
-                  <ul style="list-style: none;" id="my-assign-task-list">
+                  <ul style="list-style: none;" id="my-assigned-task-list">
                     <% @assigned_mytasks.each do |task| %>
                       <%= render partial:"shared/taskItems", :locals => {:task => task}%>
                     <% end %>
@@ -33,9 +33,9 @@
             </div>
 
             <div class="tab-pane fade" id="working" role="tabpanel" aria-labelledby="working-tab">
-              <%= render partial:"shared/filterNav" %>
+              <%= render partial:"shared/filterNav",:locals => {:status => "working"} %>
               <div>
-                  <ul style="list-style: none;" id="my-assign-task-list">
+                  <ul style="list-style: none;" id="my-working-task-list">
                     <% @working_mytasks.each do |task| %>
                       <%= render partial:"shared/taskItems", :locals => {:task => task}%>
                     <% end %>
@@ -43,9 +43,9 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
-              <%= render partial:"shared/filterNav" %>
+              <%= render partial:"shared/filterNav",:locals => {:status => "completed"} %>
               <div>
-                  <ul style="list-style: none;" id="my-assign-task-list">
+                  <ul style="list-style: none;" id="my-complete-task-list">
                     <% @completed_mytasks.each do |task| %>
                       <%= render partial:"shared/taskItems", :locals => {:task => task}%>
                     <% end %>

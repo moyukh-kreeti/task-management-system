@@ -42,7 +42,7 @@
               Current Status
               <p class="badge profile-text">
                 <%= @task.status%>
-                  <span class="dot <%= @task.status%>"></span>
+                  <span class="dot <%= @task.status.downcase%>"></span>
               </p>
             </li>
           </ul>
@@ -61,7 +61,7 @@
           <%= subtask.name %>
           <p class="badge profile-text">
             <%= subtask.status%>
-              <span class="dot <%= subtask.status%>"></span>
+              <span class="dot <%= subtask.status.downcase%>"></span>
           </p>
         </li>  
         <% end %>

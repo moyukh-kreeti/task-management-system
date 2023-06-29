@@ -1,3 +1,9 @@
-<% if remain_count>0 %>
-alert("All subtask is not completed")
+<% if final_status==true %>
+alert("All subtask is not completed yet")
+window.location = '/dashboard/mytask';
 <% end  %>
+
+$('#task-<%= task.id%>').remove();
+
+$('#my-<%= task.status.downcase%>-task-list').append(`<%= render partial:"shared/taskItems", :locals => {:task => task}%>`)
+

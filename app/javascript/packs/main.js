@@ -222,15 +222,11 @@ $('#add-subtask').on('click', function(){
   $('#sub-task-input').val('')
 })
 
-$('.task-status-change').on('change', function(){
-
-
+$(document).on('change','.task-status-change', function(){
   let data={
-
     id: $(this)[0].id,
     status: $(this).val()
   }
-
   $.ajax({
     url:'/tasks/change_task_status',
     method:'POST',
@@ -242,7 +238,70 @@ $('.task-status-change').on('change', function(){
 
     }
   })
-
-
-
 })
+$(document).on('change','.subtask-status-change', function(){
+  let data={
+    id: $(this)[0].id,
+    status: $(this).val()
+  }
+  $.ajax({
+    url:'/tasks/change_subtask_status',
+    method:'POST',
+    data:{subtask_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+    },
+    error:function(err){
+    }
+  })
+})
+
+
+$(document).on('change','.day-filter', function(){
+
+  
+  // console.log($(this).attr('data'))
+  check_filter($(this).attr('data'));
+    
+})
+
+$(document).on('change','.priority-filter', function(){
+  
+  // console.log($(this).attr('data'))
+  check_filter($(this).attr('data'));
+    
+})
+
+function check_filter(status){
+  let _day= $(`#${status}-day-filter`).val()
+  let _priority= $(`#${status}-priority-filter`).val()
+
+  let data={
+    identify:status
+  }
+
+  if(_day=="1"){
+
+    if(_priority!="3"){
+      data['priority']=_priority
+    }
+  }
+  else{
+    if(_priority!="3"){
+      data['day']=_day
+      data['priority']=_priority
+    }
+  }
+
+  console.log(data);
+
+  $.ajax({
+    url:'/tasks/apply_filters',
+    method:'GET',
+    data:{filters:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+    },
+    error:function(err){
+    }
+  })
+  
+}

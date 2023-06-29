@@ -57,31 +57,70 @@ class TasksController < ApplicationController
 
   def change_task_status
 
-    # task=User.find(39).task.find(params[:task_data][:id].to_i)
-    # puts check_subtask_status(task)
-
+    # Usser.find will be replaced with current user
     task=User.find(39).task.find(params[:task_data][:id].to_i)
 
     remain_count=task.sub_tasks.all.where(status:0).or(task.sub_tasks.all.where(status:1)).count
+    status=params[:task_data][:status].to_i
+    fn_st=false
+
+    if status == 2 && remain_count>0
+     fn_st=true 
+    else  
+      task.status=2   
+    end
+
+    if status == 0
+      task.status=0
+    elsif  status == 1
+      task.status=1 
+    end
+
+    task.save
 
     respond_to do |format| 
-      format.js { render locals: { remain_count: remain_count } }
+      format.js { render locals: { final_status: fn_st,task: task} }
     end
+  end
+
+  def change_subtask_status
+    sub_task=SubTask.find(params[:subtask_data][:id].to_i)
+    sub_task.status=params[:subtask_data][:status].to_i
+    stt=sub_task.task
+    final_status=false
+    if params[:subtask_data][:status].to_i==1 && stt.status_for_database==0
+      stt.status=1
+      stt.save
+      final_status=true
+    end
+    sub_task.save
+    respond_to do |format| 
+      format.js { render locals: { final_status: final_status,task: stt,sub_task: sub_task} }
+    end
+  end
+
+
+  def apply_filters
+
+    puts params
+
+    identify=params[:filters][:identify]
+    day=params[:filters][:day].present? ? params[:filters][:day].to_i : 1
+    priority=params[:filters][:priority].present? ? params[:filters][:priority].to_i : 3
+
+    if identify=="assigned"
+      assigned_mytasks=User.find(39).task.all.where(status:0).where("DATE(task_date) = ?", Date.today)
+    elsif identify=="working"
+    else
+    end
+
+
     
-  end
-
-
-  def check_subtask_status(task)
-
-    task.sub_tasks.all.each do |sub_task|
-      if sub_task.status_for_database ==0||sub_task.status_for_database  ==1
-        return false
-      end
-    end
-
-    return true
+    # @working_mytasks=User.find(39).task.all.where(status:1)
+    # @completed_mytasks=User.find(39).task.all.where(status:2)
 
   end
+
 
 
 

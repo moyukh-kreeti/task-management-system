@@ -7,17 +7,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li>
-          <select class="form-select" aria-labelledby="navbarDropdown">
-            <option selected>Day</option>
+          <select class="form-select day-filter" aria-labelledby="navbarDropdown" id="<%= status%>-day-filter" data="<%= status%>">
             <option value="0">Tomorrow</option>
-            <option value="1">Today</option>
-            <option value="2">Select</option>
+            <option selected value="1">Today</option>
+            <option value="2">Yesterday</option>
           </select>
         </li>
-        <li><input type="date" class="form-control" placeholder="Task Date" /></li>
+        <li><input type="date" class="form-control" placeholder="Task Date"  id="<%= status%>-date-filter"/></li>
         <li>
-          <select class="form-select" aria-labelledby="navbarDropdown">
-            <option selected>Priority</option>
+          <select class="form-select priority-filter" aria-labelledby="navbarDropdown" id="<%= status%>-priority-filter" data="<%= status%>">
+            <option selected value="3">Priority</option>
             <option value="0">Low</option>
             <option value="1">Medium</option>
             <option value="2">High</option>
