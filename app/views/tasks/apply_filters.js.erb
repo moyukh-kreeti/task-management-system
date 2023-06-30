@@ -1,0 +1,6 @@
+
+
+  $('#my-<%= identification%>-task-list').empty() 
+  $('#my-<%= identification%>-task-list').append(`<% task.each do |task| %>
+                      <%= render partial:"shared/taskItems", :locals => {:task => task}%>
+                    <% end %>`) 

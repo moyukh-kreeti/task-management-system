@@ -286,13 +286,15 @@ function check_filter(status){
     }
   }
   else{
+    
+    data['day']=_day
     if(_priority!="3"){
-      data['day']=_day
       data['priority']=_priority
     }
   }
 
-  console.log(data);
+  console.log(data)
+
 
   $.ajax({
     url:'/tasks/apply_filters',

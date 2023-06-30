@@ -108,12 +108,33 @@ class TasksController < ApplicationController
     day=params[:filters][:day].present? ? params[:filters][:day].to_i : 1
     priority=params[:filters][:priority].present? ? params[:filters][:priority].to_i : 3
 
-    if identify=="assigned"
-      assigned_mytasks=User.find(39).task.all.where(status:0).where("DATE(task_date) = ?", Date.today)
-    elsif identify=="working"
-    else
+    _day=Date.today
+    if day==0
+      _day=Date.tomorrow
+    elsif day==2
+      _day=Date.yesterday
     end
 
+    if identify=="assigned"
+      mytasks=User.find(39).task.all.where(status:0)
+    elsif identify=="working"
+      mytasks=User.find(39).task.all.where(status:1)
+    else
+      mytasks=User.find(39).task.all.where(status:2)
+    end
+
+    if day!=3
+      mytasks=mytasks.where("DATE(task_date) = ?", _day)
+    end
+
+    if priority!=3
+      mytasks=mytasks.where(task_importance:priority)
+    end
+
+
+    respond_to do |format| 
+      format.js { render locals: { identification: identify,task: mytasks} }
+    end
 
     
     # @working_mytasks=User.find(39).task.all.where(status:1)
