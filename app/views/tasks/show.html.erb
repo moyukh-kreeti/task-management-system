@@ -50,7 +50,7 @@
       </div>
     </div>
   </div>
-
+<% if @sub_tasks.count>0  %>
   <div class="container" style="display:flex;align-items: center;flex-direction:column">
     <h3 class="mt-2">Subtasks</h3>
     <div style="background-color: black; width: 20%; height: 1px"></div>
@@ -68,4 +68,25 @@
       </ul>
     </div>
   </div>
+  <% end %>
+
+<% if @task.attachments.present?  %>
+  <div class="card card-body d-flex align-items-center">
+  <h5 class="text-center">Attachment</h5>
+  <div class="d-flex flex-row justify-content-center align-items-center">
+      <% @task.attachments.each do |pic|  %>
+          <% if pic.blob.content_type.include?("image")  %>
+          <% timestamp = Time.now.strftime('%Y%m%d%H%M%S') %>
+          <% filename = "image_#{timestamp}.jpg"   %>
+          <%= link_to  url_for(pic.blob) , download: true  do %>
+          <%= image_tag 'image_file.png', {class: "m-2 p-2",style: "height:100px; width:100px",alt: "Hi"}%>
+          <% end  %>
+          <% else  %>
+         <%= link_to  url_for(pic.blob), download: true  do %>
+          <%= image_tag 'file.png', {class: "m-2 p-2",style: "height:100px; width:100px",alt: "Hi"}%>
+          <% end  %>
+          <% end  %>
+      <% end %>
+  </div>
 </div>
+<% end  %>

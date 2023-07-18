@@ -168,15 +168,16 @@ $('#assign-task').on('click',function(){
   let _task_category=$('#task-category').find(":selected").val();
   let _task_date=$('#task-date').val()
   let _task_time=$('#task-time').val()
+  let _task_des=$('#description').val()
 
   let _assign_to=$('#assign-to').find(":selected").val()
   let _task_priority=$('#task-priority').find(":selected").val()
   let _notification_interval=$('input[name=Interval]:checked').val()
-  let _task_attachment=$('#task-attachment').val()
+  // let _task_attachment=$('#task-attachment').val()
 
-  var fd = new FormData();
-  var files = $('#task-attachment')[0].files[0];
-  fd.append('file',files);
+  // var fd = new FormData();
+  // var files = $('#task-attachment')[0].files[0];
+  // fd.append('file',files);
   let _sub_task={}
   var listItems = $("#sub-task-list li");
   listItems.each(function(idx, li) {
@@ -190,6 +191,7 @@ $('#assign-task').on('click',function(){
     task_category:_task_category,
     task_date:_task_date,
     task_time:_task_time,
+    task_des:_task_des,
     assign_to:_assign_to,
     sub_task:_sub_task,
     task_importance:_task_priority,
@@ -307,3 +309,35 @@ function check_filter(status){
   })
   
 }
+
+$('#mark-as-read').on('click', function () {
+  $.ajax({
+    url:'/dashboard/mark_all_read',
+    method:'PUT',
+    data:{authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+    },
+    error:function(err){
+    }
+  })
+})
+
+
+$('.search-btn').on('click', function(){
+  let _status=$(this).attr('data')
+  let _query=$(`#${_status}-search-bar`).val()
+  let search_data={
+    query: _query,
+    status: _status
+  }
+  console.log(search_data)
+  $.ajax({
+    url:'/tasks/search',
+    method:'GET',
+    data:{search:search_data,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+    },
+    error:function(err){
+    }
+  })
+})

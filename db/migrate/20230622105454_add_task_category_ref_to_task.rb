@@ -4,5 +4,5 @@ class AddTaskCategoryRefToTask < ActiveRecord::Migration[6.1]
   end
 
   # change_column :tasks, :user_id,:string
-   # add_column :tasks, :assign_by, :string
+  # add_column :tasks, :assign_by, :string
 end

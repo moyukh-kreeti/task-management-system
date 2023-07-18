@@ -1,9 +1,37 @@
 <nav class="navbar navbar2 navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand navbar-brand-color" href="#" style="font-size:1.5rem;">Task Management System</a>
+    <a class="navbar-brand navbar-brand-color" href="#" id="app-name" style="font-size:1.5rem;">Task Management System</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+<% if session[:user_id] %>
+<div class="dropdown dropstart">
+  <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fas fa-bell"></i>
+      <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="<%= @notifications.count%>"><%= @notifications.count%></span>
+  
+  </a>
+    <ul class="dropdown-menu" style="width:300px;height:300px;overflow:auto;padding:1.5rem"  id="notification-list" aria-labelledby="dropdownMenuButton1">
+
+      <% @notifications.each do |item|  %>
+      <li>
+        <div class="card mt-2">
+          <div class="card-body">
+
+            <p class="card-text"><%= item.message %></p>
+          </div>
+        </div>
+      </li>
+
+      <% end %>
+
+        <button class="btn btn-warning mark-read" value="" id="mark-as-read">Mark all as read</button>
+      
+    </ul>
+  
+</div>
+<% end %>
    
   </div>
 </nav>

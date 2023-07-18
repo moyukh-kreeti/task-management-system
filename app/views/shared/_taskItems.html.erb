@@ -16,7 +16,7 @@
           </span>
         </div>
         <div class="col-1">
-          <%= link_to task_path(task),:class=> "btn " do %>
+          <%= link_to tasks_show_path(id:task),:class=> "btn " do %>
             <i class="fa fa-eye"></i>
           <% end %>
         </div>
@@ -40,6 +40,11 @@
         </div>
       </div>
       <div class="collapse" id="sub-task-view-<%=task.id%>">
+        <div class="card card-body">
+        <h5 class="text-center">Description of Task</h5>
+        <p><%= task.description %></p>
+        </div>
+        <% if task.sub_tasks.all.count>0  %>
         <div class="card card-body">
           <h4 class="text-center">Subtasks</h4>
           <ul>
@@ -68,6 +73,7 @@
               <% end %>
           </ul>
         </div>
+        <% end %>
       </div>
       <div class="d-flex justify-content-end">
         <select class="form-select task-status-change" id="<%= task.id%>" aria-labelledby="navbarDropdown" style="width: auto;">

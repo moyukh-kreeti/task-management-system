@@ -1,6 +1,6 @@
 
 <div class="flex-column min-vh-100 p-3 nav-color" style="width: 280px;z-index: 100;">
-      <ul class="nav nav-pills flex-column mb-auto" id="side-list">
+      <ul class="nav nav-pills flex-column mb-auto" id="side-list" user_id="<%= session[:user_id]%>">
         <li class="nav-item" >
           <%#binding.pry%>
           <%= link_to "Home", root_path,class: "nav-link link-dark #{"active" if (@active_window=="home")}" ,id:"home-li"%>
