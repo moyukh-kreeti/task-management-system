@@ -21,8 +21,6 @@ class DashboardController < ApplicationController
 
   def mytask
     @active_window = 'mytask'
-
-    # There will be some changes here @current user will be used
     @assigned_mytasks = @user.task.all.where(status: 0)
     @working_mytasks = @user.task.all.where(status: 1)
     @completed_mytasks = @user.task.all.where(status: 2)
@@ -32,18 +30,21 @@ class DashboardController < ApplicationController
     @active_window = 'assigntask'
     @task_category = TaskCategory.all
     @all_users ||= User.all
-
     @all_assigned_tasks = Task.all.where(assign_by: @user.employee_id)
-    puts '--------------------------------------------'
     puts @all_assigned_tasks
   end
 
   def adminpanel
     @active_window = 'adminpanel'
     @total_user = User.all.count
-    @total_task = Task.all.count
+    @all_verified_task = Task.all.where(task_approval: true).where(sended_to_hr: false)
     @all_users ||= User.all
     @all_task_categories = TaskCategory.all
+  end
+
+  def hrpanel
+    @active_window = 'hrpanel'
+    @all_sended_task = Task.all.where(sended_to_hr: true)
   end
 
   def mark_all_read

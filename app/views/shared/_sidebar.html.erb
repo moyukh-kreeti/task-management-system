@@ -17,7 +17,7 @@
         </li>
         <%elsif (session[:role]==1)%>
          <li class="nav-item" >
-         <%= link_to "HR Control", profile_index_path,class: "nav-link link-dark #{"active" if (@active_window=="home")}",id:"hr-li" %>
+         <%= link_to "HR Control", dashboard_hrpanel_path,class: "nav-link link-dark #{"active" if (@active_window=="hrpanel")}",id:"hr-li" %>
         </li>
         <%end%>
         

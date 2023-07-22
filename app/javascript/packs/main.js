@@ -341,3 +341,44 @@ $('.search-btn').on('click', function(){
     }
   })
 })
+
+$('.approve_task_btn').on('click', function(){
+  let _id = $(this).attr('data')
+
+  
+
+  if(confirm('Really approve the task?')) {
+
+    $.ajax({
+      url:'/dashboard/assigntask/approve_task',
+      method:'PATCH',
+      data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+      success:function(data){
+        show_toast("Task has been approved")
+      },
+      error:function(err){
+      }
+    })
+    
+  } else {
+   
+  }  
+})
+
+$('#send-to-hr-btn').on('click', function(){
+  $('#sendTaskModal').modal('show');
+})
+
+$('.hr-send-btn').on('click', function(){
+  let _id = $(this).attr('data')
+  $.ajax({
+    url:'/admin/send_to_hr',
+    method:'PATCH',
+    data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+      show_toast("Task has been sent to HR Department")
+    },
+    error:function(err){
+    }
+  })
+})

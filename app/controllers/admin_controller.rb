@@ -49,6 +49,16 @@ class AdminController < ApplicationController
     end
   end
 
+  def send_to_hr
+    task = Task.find(params[:id])
+    task.sended_to_hr = true
+    task.save
+    TaskSendToHrDepartmentJob.perform_later(task, current_user)
+    respond_to do |format|
+      format.js { render locals: { task: } }
+    end
+  end
+
   def people_params
     params.require(:info).permit(:fname, :lname, :email, :roles)
   end

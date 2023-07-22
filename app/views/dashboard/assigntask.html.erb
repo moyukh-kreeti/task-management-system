@@ -84,6 +84,11 @@
                           <i class="fa fa-eye"></i>
                           <% end %>
                       </li>
+                      <% if(task.task_approval==false)%>
+                      <li class="list-inline-item" id="approve_task_btn<%= task.id%>">
+                        <button class="btn btn-primary approve_task_btn"  data="<%= task.id%>">Approve</button>
+                      </li>
+                      <% end %>
                       </ul>
                   </td>
                 </tr>

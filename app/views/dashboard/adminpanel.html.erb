@@ -49,10 +49,10 @@
                 <div class="col-8">
                   <div class="numbers">
                     <p class="text-sm mb-0 text-uppercase font-weight-bold">
-                      Tasks
+                      Pending Send to HR Department
                     </p>
-                    <h5 class="font-weight-bolder"><%= @total_task%></h5>
-                    <p class="mb-0">Total Task Running</p>
+                    <h5 class="font-weight-bolder"><%= @all_verified_task.count%></h5>
+                    <p class="mb-0 strong">Total Approved Task</p>
                   </div>
                 </div>
                 <div
@@ -61,11 +61,8 @@
                 >
                   <div
                     class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle"
-                    id="add-task"
-                  >
-                    <%#= image_tag "add.png", {class: "rounded-circle",alt:
-                    "Hi"}%>
-                    <i class="fa-solid fa-plus" style="font-size: 2rem"></i>
+                    id="add-task">
+                    <button class="btn btn-outline-primary" id="send-to-hr-btn">Send to HR</button>
                   </div>
                 </div>
               </div>
@@ -220,3 +217,4 @@
 <%= render partial:"shared/useradd" %> 
 <%= render partial:"shared/changerole" %>
 <%= render partial:"shared/addTaskCategories" %>
+<%= render partial:"shared/sendToHr" %>

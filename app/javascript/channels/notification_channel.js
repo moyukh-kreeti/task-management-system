@@ -15,7 +15,8 @@ document.addEventListener('turbolinks:load', () => {
       console.log("Disconnected data")
     },
   
-    received(data) {
+    received(data){ 
+      console.log('job')
       let count=Number($('#notification-count').text())
       $('#notification-count').text(count+1)
       $('#notification-list').append(` <li>

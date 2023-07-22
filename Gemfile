@@ -40,6 +40,12 @@ gem 'rubocop'
 
 gem 'pry'
 
+gem 'whenever', require: false
+
+gem 'prawn'
+
+# gem 'resque'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 

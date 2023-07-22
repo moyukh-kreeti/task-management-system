@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
   before_action :current_user, :all_notifications
-  helper_method :change_task_status
+  helper_method :change_task_status, :help_method
   include ApplicationHelper
+  include TasksHelper
 
   def create
     @task_user = User.find(task_params[:assign_to].to_i)
@@ -24,12 +25,18 @@ class TasksController < ApplicationController
       end
     end
 
+    @task.next_notification_date = Date.today + interval_of_notifications[task_params[:notification_interval].to_i]
+    @task.save
+
     send_notification(@task_user.employee_id,
                       "Task Has been assigned to you by #{current_user.name} #{current_user.surname}")
     redirect_url = root_url.chop + dashboard_mytask_path
     TaskMailer.with(to: @task_user.email, task: @task, assign_user: current_user,
                     redirect: redirect_url).create.deliver_later
 
+    # if (@task.task_date.to_datetime - Date.today).to_i > 7
+    #   ScheduleReminderBeforeOneWeekJob.set(wait_until: 1.week.before(@task.task_date)).perform_later(current_user, @task_user, @task)
+    # end
     respond_to do |format|
       format.js
     end
@@ -149,6 +156,16 @@ class TasksController < ApplicationController
 
     # @working_mytasks=User.find(39).task.all.where(status:1)
     # @completed_mytasks=User.find(39).task.all.where(status:2)
+  end
+
+  def approve
+    task = Task.find(params[:id].to_i)
+    task.task_approval = true
+    task.save
+    TaskApprovalNotificationJob.perform_later(task, current_user)
+    respond_to do |format|
+      format.js { render locals: { task: } }
+    end
   end
 
   def task_params

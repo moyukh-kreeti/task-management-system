@@ -1,7 +1,15 @@
 class ApplicationJob < ActiveJob::Base
-  # Automatically retry jobs that encountered a deadlock
-  # retry_on ActiveRecord::Deadlocked
+  def send_notification(current_user, id, msg)
+    user = User.find_by(employee_id: id)
+    user.notification.create(sender_id: current_user.id, message: msg, read_status: false)
+    user.save
+    ActionCable.server.broadcast("notification_for_#{id}", { message: msg })
+  end
 
-  # Most jobs are safe to ignore if the underlying records are no longer available
-  # discard_on ActiveJob::DeserializationError
+  def send_reminder(id, msg)
+    user = User.find_by(employee_id: id)
+    user.notification.create(message: msg, read_status: false)
+    user.save!
+    ActionCable.server.broadcast("notification_for_#{id}", { message: msg })
+  end
 end
