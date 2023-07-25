@@ -382,3 +382,16 @@ $('.hr-send-btn').on('click', function(){
     }
   })
 })
+
+$('#user-search-btn').on('click',function(){
+  let query= $('#user-search').val()
+  $.ajax({
+    url:'/admin/search_user',
+    method:'GET',
+    data:{query:query,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+    },
+    error:function(err){
+    }
+  })
+})

@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6 col-12">
           <div class="card mb-4 custom-card">
-            <div class="card-body p-3">
+            <div class="card-body p-3 cursor-pointer">
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
@@ -77,17 +77,18 @@
         <div class="card mb-4 custom-card">
           <div class="card-body p-3" style="height: 30rem">
             <h3 style="margin-bottom: 1rem">List of Users</h3>
-            <form class="d-flex">
+            <div class="d-flex">
               <input
                 class="form-control me-2"
                 type="search"
-                placeholder="Search"
+                placeholder="Search User"
                 aria-label="Search"
+                id="user-search"
               />
-              <button class="btn btn-outline-success" type="submit">
+              <button class="btn btn-outline-success" type="submit" id="user-search-btn">
                 Search
               </button>
-            </form>
+            </div>
             <table class="table caption-top">
               <thead>
                 <tr>
@@ -102,31 +103,15 @@
                 <tr>
                   <td><%=item.name+" "+item.surname%></td>
                   <td><%=item.roles%></td>
-                  <td>10</td>
-                  <td>10</td>
+                  <td><%= item.task.where.not(status: 2).count %></td>
+                  <td><%= item.task.where(status: 1).count %></td>
                 </tr>
                 <% end %>
               </tbody>
             </table>
-            <%# <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a
-                    class="page-link"
-                    href="#"
-                    tabindex="-1"
-                    aria-disabled="true"
-                    >Previous</a
-                  >
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav> %>
+           <div class="d-flex justify-content-center">
+               <%= paginate @all_users%>
+           </div>
           </div>
         </div>
       </div>
@@ -197,18 +182,7 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-12">
-            <div class="card mb-4 custom-card" style="height: 10rem">
-              <div class="card-body p-3"></div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6 col-12">
-            <div class="card mb-4 custom-card" style="height: 10rem">
-              <div class="card-body p-3"></div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@
 env :PATH, ENV['PATH']
 set :environment, 'development'
 set :output, './log/cron_log.log'
-every 1.minutes do
-  # runner 'TasksController.new.help_method'
-  runner 'Task.msg'
+every 1.days do
+  runner 'SchedulingReminderNotificationJob.new.perform'
+  # runner 'Task.msg'
 end

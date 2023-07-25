@@ -52,7 +52,7 @@ class PdfsController < ApplicationController
         end
         pdf.fill_color '000000'
       end
-    end    
+    end
 
     pdf.stamp_at 'approved', [500, 550]
     pdf.move_down 20
@@ -73,6 +73,7 @@ class PdfsController < ApplicationController
     else
       pdf.text 'No subtasks available.'
     end
-    send_data pdf.render, filename: "task_#{@task.id}_#{(Time.now.to_f * 1000).to_i.to_s}", type: 'application/pdf', disposition: 'attachment'
+    send_data pdf.render, filename: "task_#{@task.id}_#{(Time.now.to_f * 1000).to_i}", type: 'application/pdf',
+                          disposition: 'attachment'
   end
 end

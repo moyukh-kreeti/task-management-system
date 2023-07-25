@@ -1,6 +1,4 @@
 .navbar2 {
-  // background-color: rgb(209, 131, 242) !important;
-  // background-color: #F4B183 ;
   background-color: #28283c ;
 }
 
@@ -16,25 +14,18 @@
 .main{
   display: flex;
   flex-wrap: nowrap;
-  // height: 100vh;
-  // max-height: 100vh;
-  // overflow-x: auto;
-  // overflow-y: hidden;
 }
 
 .nav-color{
-  // background-color: #FFD966;
   background-color: #e5e5e3;
 }
 
 .nav-pills .nav-link.active {
   color: #fff ; 
-  // background-color: #faae2b ;
   background-color: #7f5af0 ;
 }
 
 .navbar-brand-color{
-  // color:#4C4B16;
   color:#fff;
 }
 
@@ -85,4 +76,8 @@
 .drop-down-btn{
   background: transparent;
     border: none;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }

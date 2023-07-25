@@ -65,7 +65,7 @@
                   <td>
                     <%= task.user.name+" "+task.user.surname %></td>
                   <td><%= task.task_importance %></td>
-                  <td>Assigned</td>
+                  <td><%= task.status %></td>
                   <td>
                      <ul class=" list-inline m-0">
                       <li class="list-inline-item">
@@ -95,6 +95,9 @@
                 <% end %>
             </tbody>
           </table>
+          <div class="d-flex justify-content-center">
+               <%= paginate @all_assigned_tasks %>
+           </div>
         </div>
       </div>
     </div>

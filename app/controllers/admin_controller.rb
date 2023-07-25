@@ -59,6 +59,13 @@ class AdminController < ApplicationController
     end
   end
 
+  def search_user
+    result = User.search_user(params[:query]).per(6)
+    respond_to do |format|
+      format.js { render locals: { result: } }
+    end
+  end
+
   def people_params
     params.require(:info).permit(:fname, :lname, :email, :roles)
   end

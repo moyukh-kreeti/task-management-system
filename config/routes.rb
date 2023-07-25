@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'dashboard/adminpanel'
   get 'dashboard/hrpanel'
   put 'dashboard/mark_all_read'
+  get 'admin/search_user'
   post 'admin/addUser'
   post 'admin/makeAdmin'
   post 'admin/makeHr'
