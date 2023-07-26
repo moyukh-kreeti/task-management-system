@@ -41,7 +41,7 @@ function makeAdmin(_id){
 
   $.ajax({
 
-    url:'/admin/makeAdmin',
+    url:'/admin/make_admin',
     method:'POST',
     data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
@@ -60,7 +60,7 @@ function makeHR(_id){
 
   $.ajax({
 
-    url:'/admin/makeHr',
+    url:'/admin/make_hr',
     method:'POST',
     data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){

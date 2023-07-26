@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# TasksController class
 class TasksController < ApplicationController
   before_action :current_user, :all_notifications
   helper_method :change_task_status, :help_method
@@ -6,39 +9,11 @@ class TasksController < ApplicationController
 
   def create
     @task_user = User.find(task_params[:assign_to].to_i)
-    date_time = DateTime.parse("#{task_params[:task_date]}T#{task_params[:task_time]}")
-    @task = @task_user.task.create(
-      task_name: task_params[:task_name],
-      task_category: TaskCategory.find(task_params[:task_category]),
-      assign_by: @user.employee_id,
-      task_importance: task_params[:task_importance].to_i,
-      task_date: date_time,
-      task_time: date_time,
-      description: task_params[:task_des],
-      repeat_interval: task_params[:notification_interval].to_i,
-      status: 0
-    )
-    sub_tasks = task_params[:sub_task]
-    if sub_tasks.present?
-      sub_tasks.each do |_key, value|
-        @task.sub_tasks.create(name: value, status: 0)
-      end
-    end
-
-    @task.next_notification_date = Date.today + interval_of_notifications[task_params[:notification_interval].to_i]
-    @task.save
-
-    send_notification(@task_user.employee_id,
-                      "Task Has been assigned to you by #{current_user.name} #{current_user.surname}")
-    redirect_url = root_url.chop + dashboard_mytask_path
-    TaskMailer.with(to: @task_user.email, task: @task, assign_user: current_user,
-                    redirect: redirect_url).create.deliver_later
-
-    # if (@task.task_date.to_datetime - Date.today).to_i > 7
-    #   ScheduleReminderBeforeOneWeekJob.set(wait_until: 1.week.before(@task.task_date)).perform_later(current_user, @task_user, @task)
-    # end
+    date_time = parse_date_time(task_params[:task_date], task_params[:task_time])
+    @task = create_task(date_time)
+    post_task_creation_work
     respond_to do |format|
-      format.js
+      format.js { render locals: { task: @task } }
     end
   end
 
@@ -73,89 +48,43 @@ class TasksController < ApplicationController
   end
 
   def search
-    query = params[:search][:query]
-    status = all_task_status[params[:search][:status]]
-    records = Task.search_tasks(query, status, current_user.id)
+    make_search_params
+    records = Task.search_tasks(@query, @status, current_user.id)
     respond_to do |format|
       format.js { render locals: { records:, status: params[:search][:status] } }
     end
   end
 
   def change_task_status
-    # Usser.find will be replaced with current user
     task = @user.task.find(params[:task_data][:id].to_i)
-
-    remain_count = task.sub_tasks.all.where(status: 0).or(task.sub_tasks.all.where(status: 1)).count
     status = params[:task_data][:status].to_i
-    fn_st = false
-
-    if status == 2 && remain_count > 0
-      fn_st = true
-    else
-      task.status = 2
-    end
-
-    if status == 0
-      task.status = 0
-    elsif status == 1
-      task.status = 1
-    end
-
-    task.save
-
+    fn_st = update_task_status(task, status)
     respond_to do |format|
       format.js { render locals: { final_status: fn_st, task: } }
     end
   end
 
   def change_subtask_status
-    sub_task = SubTask.find(params[:subtask_data][:id].to_i)
-    sub_task.status = params[:subtask_data][:status].to_i
+    sub_task = find_subtask(params[:subtask_data][:id])
+    update_subtask_status(sub_task, params[:subtask_data][:status])
     stt = sub_task.task
-    final_status = false
-    if params[:subtask_data][:status].to_i == 1 && stt.status_for_database == 0
-      stt.status = 1
-      stt.save
-      final_status = true
-    end
-    sub_task.save
+    final_status = update_task_status_after_subtask(stt, params[:subtask_data][:status])
     respond_to do |format|
       format.js { render locals: { final_status:, task: stt, sub_task: } }
     end
   end
 
   def apply_filters
-    puts params
-
     identify = params[:filters][:identify]
-    day = params[:filters][:day].present? ? params[:filters][:day].to_i : 1
-    priority = params[:filters][:priority].present? ? params[:filters][:priority].to_i : 3
-
-    _day = Date.today
-    if day == 0
-      _day = Date.tomorrow
-    elsif day == 2
-      _day = Date.yesterday
-    end
-
-    mytasks = if identify == 'assigned'
-                @user.task.all.where(status: 0)
-              elsif identify == 'working'
-                @user.task.all.where(status: 1)
-              else
-                @user.task.all.where(status: 2)
-              end
-
-    mytasks = mytasks.where('DATE(task_date) = ?', _day) if day != 3
-
-    mytasks = mytasks.where(task_importance: priority) if priority != 3
-
+    day_param = day_param_generator
+    priority = priority_generator
+    day = calculate_day(day_param)
+    mytasks = filter_tasks_by_identification(identify)
+    mytasks = filter_tasks_by_day(mytasks, day, day_param)
+    mytasks = filter_tasks_by_priority(mytasks, priority, priority_param)
     respond_to do |format|
       format.js { render locals: { identification: identify, task: mytasks } }
     end
-
-    # @working_mytasks=User.find(39).task.all.where(status:1)
-    # @completed_mytasks=User.find(39).task.all.where(status:2)
   end
 
   def approve

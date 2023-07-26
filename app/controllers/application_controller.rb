@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# ApplicationController class
+# rubocop:disable all
 class ApplicationController < ActionController::Base
   @@welcome_flash = false
   @active_window = 'home'
@@ -19,3 +23,4 @@ class ApplicationController < ActionController::Base
     }
   end
 end
+# rubocop:enable all

@@ -11,7 +11,7 @@ $('.del-task-category').on('click',function(){
 function removeCategory(_id){
 
   $.ajax({
-    url:'/dashboard/removeTaskCategories',
+    url:'/dashboard/remove_task_categories',
     method:'DELETE',
     data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){

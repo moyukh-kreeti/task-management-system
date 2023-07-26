@@ -36,7 +36,7 @@ $('#add-user-to-db').click(function(){
 
 function add_user(user){
   $.ajax({
-    url: '/admin/addUser',
+    url: '/admin/add_user',
     method: 'POST',
     data: { info: user, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
     success: function(response) {
@@ -92,7 +92,7 @@ function makeAdmin(_id){
 
   $.ajax({
 
-    url:'/admin/makeAdmin',
+    url:'/admin/make_admin',
     method:'POST',
     data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
@@ -111,7 +111,7 @@ function makeHR(_id){
 
   $.ajax({
 
-    url:'/admin/makeHr',
+    url:'/admin/make_hr',
     method:'POST',
     data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
@@ -127,7 +127,7 @@ function makeHR(_id){
 function addCategory(category){
   $.ajax({
 
-    url:'/admin/addTaskCategories',
+    url:'/admin/add_task_categories',
     method:'POST',
     data:{data: category,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
@@ -143,7 +143,7 @@ function addCategory(category){
 function removeCategory(_id){
 
   $.ajax({
-    url:'/admin/removeTaskCategories',
+    url:'/admin/remove_task_categories',
     method:'DELETE',
     data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){

@@ -1,52 +1,43 @@
+# frozen_string_literal: true
+
+# AdminController class
 class AdminController < ApplicationController
   before_action :current_user
 
-  def addUser
+  def add_user
     @user = User.create(name: people_params[:fname], surname: people_params[:lname], email: people_params[:email],
                         roles: people_params[:roles].to_i)
     @total_user = User.all.count
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
-  def makeAdmin
+  def make_admin
     if @user.Admin?
       emp = User.find(params[:id])
       emp.roles = 2
       emp.save!
     end
-
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
-  def makeHr
+  def make_hr
     if @user.Admin?
       emp = User.find(params[:id])
       emp.roles = 1
       emp.save!
     end
-
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
-  def addTaskCategories
+  def add_task_categories
     @task_category = TaskCategory.create(task_name: params[:data])
 
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
-  def removeTaskCategories
+  def remove_task_categories
     TaskCategory.find(params[:id]).destroy
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
   def send_to_hr

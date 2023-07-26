@@ -14,12 +14,12 @@ Rails.application.routes.draw do
   get 'dashboard/hrpanel'
   put 'dashboard/mark_all_read'
   get 'admin/search_user'
-  post 'admin/addUser'
-  post 'admin/makeAdmin'
-  post 'admin/makeHr'
-  post 'admin/addTaskCategories'
+  post 'admin/add_user'
+  post 'admin/make_admin'
+  post 'admin/make_hr'
+  post 'admin/add_task_categories'
   patch 'admin/send_to_hr'
-  delete 'admin/removeTaskCategories'
+  delete 'admin/remove_task_categories'
   scope '/dashboard/assigntask' do
     resources :tasks
     patch 'approve_task', to: 'tasks#approve'
