@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is database migration
 class AddTaskCategoryRefToTask < ActiveRecord::Migration[6.1]
   def change
     add_reference :tasks, :task_category, null: false, foreign_key: true

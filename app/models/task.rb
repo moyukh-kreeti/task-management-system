@@ -5,6 +5,15 @@ class Task < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
 
+  validates :task_name, presence: true
+  validates :task_category, presence: true
+  validates :task_date, presence: true
+  validates :task_time, presence: true
+  validates :repeat_interval, presence: true
+  validates :task_importance, presence: true
+  validates :description, presence: true
+  validates :next_notification_date, presence: true
+
   def self.index_data
     __elasticsearch__.create_index! force: true
     __elasticsearch__.import force: true

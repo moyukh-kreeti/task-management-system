@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# ApplicationHelper class
 module ApplicationHelper
   def send_notification(id, msg)
     user = User.find_by(employee_id: id)

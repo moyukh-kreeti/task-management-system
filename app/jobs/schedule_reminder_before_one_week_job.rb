@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# ScheduleReminderBeforeOneWeekJob class
 class ScheduleReminderBeforeOneWeekJob < ApplicationJob
   queue_as :default
 

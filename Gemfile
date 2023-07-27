@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -41,6 +43,8 @@ gem 'elasticsearch-rails', '~> 7.2', '>= 7.2.1'
 gem 'rubocop'
 
 gem 'pry'
+
+gem 'faker'
 
 gem 'whenever', require: false
 

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# rubocop:disable all
 Rails.application.routes.draw do
   root 'dashboard#index'
   get 'tasks/index'
@@ -34,3 +37,4 @@ Rails.application.routes.draw do
     get 'generate_pdf', to: 'pdfs#generate_pdf'
   end
 end
+# rubocop:enable all

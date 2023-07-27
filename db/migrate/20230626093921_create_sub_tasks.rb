@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is database migration
 class CreateSubTasks < ActiveRecord::Migration[6.1]
   def change
     create_table :sub_tasks do |t|

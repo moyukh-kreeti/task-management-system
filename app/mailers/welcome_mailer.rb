@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# WelcomeMailer class
 class WelcomeMailer < ApplicationMailer
   default from: 'collegevibes.epizy@gmail.com'
 

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# TaskSendToHrDepartmentJob class
 class TaskSendToHrDepartmentJob < ApplicationJob
   queue_as :default
 

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# SchedulingReminderNotificationJob class
 class SchedulingReminderNotificationJob < ApplicationJob
   queue_as :default
 

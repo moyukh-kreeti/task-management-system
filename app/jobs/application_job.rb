@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# ApplicationJob class
 class ApplicationJob < ActiveJob::Base
   def send_notification(current_user, id, msg)
     user = User.find_by(employee_id: id)

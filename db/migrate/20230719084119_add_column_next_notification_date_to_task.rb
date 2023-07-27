@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is database migration
 class AddColumnNextNotificationDateToTask < ActiveRecord::Migration[6.1]
   def change
     add_column :tasks, :next_notification_date, :datetime

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# TaskApprovalNotificationJob class
 class TaskApprovalNotificationJob < ApplicationJob
   queue_as :default
 

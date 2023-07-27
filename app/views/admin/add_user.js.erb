@@ -1,5 +1,13 @@
+<% if @user.errors.any?%>
+  show_toast("Some error encountered")
+  $('#first-name-error').text(`<%= raw @user.errors.full_messages_for(:name)[0] %>`)
+  $('#last-name-error').text(`<%= raw @user.errors.full_messages_for(:surname)[0] %>`)
+  $('#email-error').text(`<%= raw @user.errors.full_messages_for(:email)[0] %>`)
+  $('#roles-error').text(`<%= raw @user.errors.full_messages_for(:roles)[0] %>`)
+<% else  %>
 $('#total-user-count').text(<%= @total_user %>)
 $('#close-modal').trigger('click')
+clear_input()
 $('#employee_list').append(`<tr>
                   <td><%=@user.name+" "+@user.surname%></td>
                   <td><%=@user.roles%></td>
@@ -71,4 +79,25 @@ function makeHR(_id){
     }
 
   })
+}
+
+function clear_input(){
+  $('#first-name-error').text('')
+  $('#last-name-error').text('')
+  $('#email-error').text('')
+  $('#input-fname').val('')
+  $('#input-lname').val('')
+  $('#input-email').val('')
+}
+
+
+<% end  %>
+
+function show_toast(msg){
+  var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+  var toastList = toastElList.map(function(toastEl) {
+    $(toastEl).children()[1].innerHTML=msg
+    return new bootstrap.Toast(toastEl)
+  })
+  toastList.forEach(toast => toast.show())
 }

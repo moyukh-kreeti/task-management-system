@@ -40,8 +40,7 @@ function add_user(user){
     method: 'POST',
     data: { info: user, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
     success: function(response) {
-      show_toast("User added successfully")
-      
+ 
     },
     error: function(xhr, status, error) {
   
@@ -78,9 +77,14 @@ $('#add-task-categories').on('click',function(){
 $('#add-task-caregory').on('click',function(){
   category=$('#input-category').val()
   $('#input-category').val('')
-  addCategory(category)
+  if(category==''){
+    $('#task-category-error').text('Please provide a category name , Field cannot be empty')
+  }
+  else{
+    $('#task-category-error').text('')
+    addCategory(category)
+  }
   
-
 })
 
 $('.del-task-category').on('click',function(){
@@ -173,11 +177,6 @@ $('#assign-task').on('click',function(){
   let _assign_to=$('#assign-to').find(":selected").val()
   let _task_priority=$('#task-priority').find(":selected").val()
   let _notification_interval=$('input[name=Interval]:checked').val()
-  // let _task_attachment=$('#task-attachment').val()
-
-  // var fd = new FormData();
-  // var files = $('#task-attachment')[0].files[0];
-  // fd.append('file',files);
   let _sub_task={}
   var listItems = $("#sub-task-list li");
   listItems.each(function(idx, li) {
@@ -186,35 +185,86 @@ $('#assign-task').on('click',function(){
       
   });
 
-  const data={
-    task_name:_task_name,
-    task_category:_task_category,
-    task_date:_task_date,
-    task_time:_task_time,
-    task_des:_task_des,
-    assign_to:_assign_to,
-    sub_task:_sub_task,
-    task_importance:_task_priority,
-    notification_interval:_notification_interval
+  if(check_validation(_task_name,_task_des,_task_category,_task_date,_task_time,_assign_to,_task_priority,_notification_interval)){
+    const data={
+      task_name:_task_name,
+      task_category:_task_category,
+      task_date:_task_date,
+      task_time:_task_time,
+      task_des:_task_des,
+      assign_to:_assign_to,
+      sub_task:_sub_task,
+      task_importance:_task_priority,
+      notification_interval:_notification_interval
+    }
+  
+    $.ajax({
+      url:'/dashboard/assigntask/tasks',
+      method:'POST',
+      data:{task_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+      success:function(data){
+        // show_toast("Admin created successfully")
+      },
+      error:function(err){
+  
+      }
+    })
   }
 
-  console.log(data)
-
-
-  $.ajax({
-    url:'/dashboard/assigntask/tasks',
-    method:'POST',
-    data:{task_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
-    success:function(data){
-      // show_toast("Admin created successfully")
-    },
-    error:function(err){
-
-    }
-  })
 
 
 })
+
+function check_validation(task_name,task_des,task_category,task_date,task_time,assign_to,task_priority,notification_interval){
+  
+  refresh_assign_task_model()
+  valid=true
+  if(task_name== ''){
+    $('#task-name-error').text("Field Can not be empty")
+    valid=false
+  }
+  if(task_des==''){
+    $('#task-des-error').text("Field Can not be empty")
+    valid=false
+  }
+  if(task_category=='Choose...'){
+    $('#task-category-error').text("Field Can not be empty")
+    valid=false
+  }
+  if(task_date==''){
+    $('#task-date-error').text("Field Can not be empty")
+    valid=false
+  }
+  if(task_time==''){
+    $('#task-time-error').text("Field Can not be empty")
+    valid=false
+  }
+  if(assign_to=='Choose...'){
+    $('#assign-to-error').text("Field Can not be empty")
+    valid=false
+  }
+  if(task_priority=='Choose...'){
+    $('#task-priority-error').text("Field Can not be empty")
+    valid=false
+  }
+  if(notification_interval==undefined){
+    $('#repeat-interval-error').text("Field Can not be empty")
+    valid=false
+  }
+
+  return valid
+}
+
+function refresh_assign_task_model(){
+  $('#task-name-error').text('')
+  $('#task-des-error').text('')
+  $('#task-category-error').text('')
+  $('#task-date-error').text('')
+  $('#task-time-error').text('')
+  $('#assign-to-error').text('')
+  $('#task-priority-error').text('')
+  $('#repeat-interval-error').text('')
+}
 
 
 $('#add-subtask').on('click', function(){

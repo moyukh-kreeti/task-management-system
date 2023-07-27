@@ -115,11 +115,14 @@
       <div class="modal-body">
 
         <div class="form-group mt-3">
+          <label for="task-name" class="form-label">Task Name</label>
           <input type="text" class="form-control" id="task-name" placeholder="Task Name" />
+          <p id="task-name-error" class="text-danger"></p>
         </div>
         <div class="form-group mt-3">
           <label for="description" class="form-label">Task Descryption</label>
           <textarea class="form-control" id="description" rows="3" id="task-descryption"></textarea>
+          <p id="task-des-error" class="text-danger"></p>
         </div>
         <div class="form-group mt-3">
           <label for="task-category">Task Category</label>
@@ -131,6 +134,7 @@
               </option>
               <% end %>
           </select>
+          <p id="task-category-error" class="text-danger"></p>
         </div>
 
         <div class="form-group mt-3">
@@ -143,10 +147,12 @@
         <div class="form-group mt-3">
           <label for="task-date">Day task to be performed</label>
           <input type="date" class="form-control" id="task-date" placeholder="Task Date" />
+          <p id="task-date-error" class="text-danger"></p>
         </div>
         <div class="form-group mt-3">
           <label for="task-time">Time task to be performed</label>
           <input type="time" class="form-control" id="task-time" placeholder="Task Time" />
+          <p id="task-time-error" class="text-danger"></p>
         </div>
         <div class="form-group mt-3">
           <label for="assign-to">Assign To</label>
@@ -157,6 +163,7 @@
                 <%= user.name+" "+user.surname %></option>
             <% end %>
           </select>
+          <p id="assign-to-error" class="text-danger"></p>
         </div>
         <div class=" form-group mt-3">
                   <label for="task-priority">Priority</label>
@@ -166,6 +173,7 @@
                     <option value="1">Medium</option>
                     <option value="2">High</option>
                   </select>
+                  <p id="task-priority-error" class="text-danger"></p>
         </div>
         <div class=" form-group mt-3">
          <label class="form-check-label" for="repetation-cycle">
@@ -213,6 +221,7 @@
               Yearly
             </label>
           </div>
+          <p id="repeat-interval-error" class="text-danger"></p>
         </div>
       </div>
       <div class="modal-footer">

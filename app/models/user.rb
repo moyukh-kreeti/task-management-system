@@ -3,6 +3,11 @@
 require 'httparty'
 # User Model
 class User < ApplicationRecord
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
+  validates :roles, presence: true, numericality: { only_integer: true }
+  validates :surname, presence: true
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
   paginates_per 6
@@ -13,6 +18,11 @@ class User < ApplicationRecord
       indexes :surname, type: :text, analyzer: :english
       indexes :email, type: :text, analyzer: :english
     end
+  end
+
+  def self.index_data
+    __elasticsearch__.create_index! force: true
+    __elasticsearch__.import force: true
   end
 
   def as_indexed_json(_options = {})
@@ -32,6 +42,8 @@ class User < ApplicationRecord
                       } })
     response.records
   end
+
+  index_data
 
   enum roles: {
     employee: 0,

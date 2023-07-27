@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# TaskMailer class
 class TaskMailer < ApplicationMailer
   default from: 'collegevibes.epizy@gmail.com'
   def create

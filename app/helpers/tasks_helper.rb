@@ -7,13 +7,13 @@ module TasksHelper
   end
 
   def create_task(date_time)
-    @task_user.tasks.create(task_name: task_params[:task_name],
-                            task_category: TaskCategory.find(task_params[:task_category]),
-                            assign_by: @user.employee_id, task_importance: task_params[:task_importance].to_i,
-                            task_date: date_time, task_time: date_time,
-                            description: task_params[:task_des],
-                            repeat_interval: task_params[:notification_interval].to_i,
-                            status: 0)
+    @task_user.task.create(task_name: task_params[:task_name],
+                           task_category: TaskCategory.find(task_params[:task_category]),
+                           assign_by: @user.employee_id, task_importance: task_params[:task_importance].to_i,
+                           task_date: date_time, task_time: date_time,
+                           description: task_params[:task_des],
+                           repeat_interval: task_params[:notification_interval].to_i,
+                           status: 0)
   end
 
   def create_sub_tasks(sub_tasks_params)
@@ -22,7 +22,7 @@ module TasksHelper
     end
   end
 
-  def send_notification
+  def send_notification_for_task
     msg = "Task Has been assigned to you by #{current_user.name} #{current_user.surname}"
     send_notification(@task_user.employee_id, msg)
     redirect_url = root_url.chop + dashboard_mytask_path
@@ -35,7 +35,7 @@ module TasksHelper
     date = Date.today + @task.interval_of_notifications[task_params[:notification_interval].to_i]
     @task.next_notification_date = date
     @task.save
-    send_notification
+    send_notification_for_task
   end
 
   def make_search_params
