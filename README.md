@@ -39,7 +39,7 @@ rails s
 
 #### 5. Then run to run the cron job for scheduling the notification run the following comand
 
-```
+```bash
 whenever --update-crontab
 ```
 
