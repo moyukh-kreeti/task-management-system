@@ -5,12 +5,13 @@ class DashboardController < ApplicationController
   include ApplicationHelper
   include DashboardHelper
 
-  before_action :current_user, :all_notifications
+  before_action :current_user
   before_action :check_session, except: [:index]
+  before_action :all_notifications, except: [:index]
 
   def index
     redirect_to authentication_login_path unless session[:user_id].present?
-    return if session[:user_id].present? == false
+    return unless session[:user_id].present?
 
     @user = User.find_by(employee_id: session[:user_id])
     redirect_to dashboard_mytask_path

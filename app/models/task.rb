@@ -14,7 +14,7 @@ class Task < ApplicationRecord
   validates :description, presence: true
 
   def self.index_data
-    __elasticsearch__.create_index! force: true
+    __elasticsearch__.create_index!
     __elasticsearch__.import force: true
   end
 

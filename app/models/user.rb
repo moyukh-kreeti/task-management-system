@@ -20,7 +20,7 @@ class User < ApplicationRecord
   end
 
   def self.index_data
-    __elasticsearch__.create_index! force: true
+    __elasticsearch__.create_index!
     __elasticsearch__.import force: true
   end
 
