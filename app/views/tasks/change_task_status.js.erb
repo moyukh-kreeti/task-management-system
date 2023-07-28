@@ -4,6 +4,7 @@ window.location = '/dashboard/mytask';
 <% end  %>
 
 $('#task-<%= task.id%>').remove();
+$('#my-<%= task.status.downcase%>-empty-task').remove();
 
 $('#my-<%= task.status.downcase%>-task-list').append(`<%= render partial:"shared/taskItems", :locals => {:task => task}%>`)
 

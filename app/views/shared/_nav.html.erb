@@ -25,8 +25,7 @@
       </li>
 
       <% end %>
-
-        <button class="btn btn-warning mark-read" value="" id="mark-as-read">Mark all as read</button>
+      <button class="btn btn-warning mark-read <%=@notifications.count.positive? ? "" : "d-none"%>" value="" id="mark-as-read" >Mark all as read</button>
       
     </ul>
   

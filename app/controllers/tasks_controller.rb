@@ -89,9 +89,12 @@ class TasksController < ApplicationController
 
   def approve
     task = Task.find(params[:id].to_i)
-    task.task_approval = true
-    task.save
-    TaskApprovalNotificationJob.perform_later(task, current_user)
+    if task.status_for_database == 2
+      task.task_approval = true
+      task.save
+      TaskApprovalNotificationJob.perform_later(task, current_user)
+    end
+    
     respond_to do |format|
       format.js { render locals: { task: } }
     end

@@ -428,7 +428,7 @@ $('.approve_task_btn').on('click', function(){
       method:'PATCH',
       data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
       success:function(data){
-        show_toast("Task has been approved")
+       
       },
       error:function(err){
       }

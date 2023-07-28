@@ -8,6 +8,6 @@ $('#subtask-status-container-<%= sub_task.id%>').append(`<p class="badge profile
 
 <% if final_status==true %>
 $('#task-<%= task.id%>').remove();
-
+$('#my-<%= task.status.downcase%>-empty-task').remove();
 $('#my-<%= task.status.downcase%>-task-list').append(`<%= render partial:"shared/taskItems", :locals => {:task => task}%>`)
 <% end  %>

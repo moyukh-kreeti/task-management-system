@@ -1,8 +1,13 @@
 import consumer from "./consumer"
 
+let currentSubscription;
 document.addEventListener('turbolinks:load', () => {
+
+  if (currentSubscription ){
+    consumer.subscriptions.remove(currentSubscription);
+  }
   
-  consumer.subscriptions.create({ channel: "NotificationChannel", user_id: $('#side-list').attr('user_id') }, {
+  currentSubscription=consumer.subscriptions.create({ channel: "NotificationChannel", user_id: $('#side-list').attr('user_id') }, {
     connected() {
       // Called when the subscription is ready for use on the server
       
@@ -16,7 +21,6 @@ document.addEventListener('turbolinks:load', () => {
     },
   
     received(data){ 
-      console.log('job')
       let count=Number($('#notification-count').text())
       $('#notification-count').text(count+1)
       $('#notification-list').append(` <li>
@@ -26,6 +30,7 @@ document.addEventListener('turbolinks:load', () => {
         </div>
       </div>
     </li>`)
+      $('#mark-as-read').removeClass('d-none')
     }
   });
 });

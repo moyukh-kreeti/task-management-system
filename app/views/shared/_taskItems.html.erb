@@ -1,7 +1,7 @@
  <li id="task-<%= task.id%>">
   <div class="card mb-4 custom-card2 p-4">
     <h4><%= task.task_name %></h4>
-    <div class="card-body" style="padding: 0.5rem;" data-bs-toggle="collapse"
+    <div class="card-body task-item-card" style="padding: 0.5rem;" data-bs-toggle="collapse"
             data-bs-target="#sub-task-view-<%=task.id%>" aria-expanded="false" aria-controls="sub-task-view-<%=task.id%>">
       <div class="row">
         <div class="col-7">
@@ -33,7 +33,7 @@
         </div>
 
         <div class="col-1">
-          <button class=" drop-down-btn " type="button" data-bs-toggle="collapse"
+          <button class=" drop-down-btn " id="drop-down-<%=task.id%>" type="button" data-bs-toggle="collapse"
             data-bs-target="#sub-task-view-<%=task.id%>" aria-expanded="false" aria-controls="sub-task-view-<%=task.id%>">
             <%= image_tag "drop_down.png" , {class: "rounded-circle" ,alt: "Hi", style: "height:32px;width:32px" } %>
           </button>
