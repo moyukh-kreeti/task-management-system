@@ -2,7 +2,7 @@
 
 # TasksController class
 class TasksController < ApplicationController
-  before_action :current_user, :all_notifications
+  before_action :check_session, :current_user, :all_notifications
   helper_method :change_task_status, :help_method
   include ApplicationHelper
   include TasksHelper

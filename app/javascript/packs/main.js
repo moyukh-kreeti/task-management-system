@@ -12,6 +12,9 @@ $('#change_pic').click(function(){
 $('#add-user').click(function(){
   $('#exampleModal').modal('show')
 })
+$('#add-user-container').click(function(){
+  $('#exampleModal').modal('show')
+})
 $('#change-employee-details').click(function(){
   $('#exampleModal2').modal('show')
 })
@@ -31,6 +34,35 @@ $('#add-user-to-db').click(function(){
 
   add_user(user)
 
+})
+
+$('#add-admin-user-to-db').on('click', function (){
+  let _fname=$('#input-fname-admin').val()
+  let _lname=$('#input-lname-admin').val()
+  let _email=$('#input-email-admin').val()
+  const user={
+    fname:_fname,
+    lname:_lname,
+    email:_email
+  }
+
+  $.ajax({
+    url: '/superuser/add/adminuser',
+    method: 'POST',
+    data: { info: user, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
+    success: function(response) {
+      if(response.status == true){
+        alert('Successfully added admin user. Please log in to the system with that google account')
+        window.location='/'
+      }
+      else{
+        alert('Something error has accured')
+      }
+    },
+    error: function(xhr, status, error) {
+  
+    }
+    });
 })
 
 
@@ -309,18 +341,11 @@ $(document).on('change','.subtask-status-change', function(){
 
 
 $(document).on('change','.day-filter', function(){
-
-  
-  // console.log($(this).attr('data'))
   check_filter($(this).attr('data'));
-    
 })
 
 $(document).on('change','.priority-filter', function(){
-  
-  // console.log($(this).attr('data'))
   check_filter($(this).attr('data'));
-    
 })
 
 function check_filter(status){
@@ -376,6 +401,9 @@ $('#mark-as-read').on('click', function () {
 $('.search-btn').on('click', function(){
   let _status=$(this).attr('data')
   let _query=$(`#${_status}-search-bar`).val()
+  if (_query==''){
+    _query="*"
+  }
   let search_data={
     query: _query,
     status: _status
@@ -394,11 +422,7 @@ $('.search-btn').on('click', function(){
 
 $('.approve_task_btn').on('click', function(){
   let _id = $(this).attr('data')
-
-  
-
   if(confirm('Really approve the task?')) {
-
     $.ajax({
       url:'/dashboard/assigntask/approve_task',
       method:'PATCH',
@@ -408,10 +432,7 @@ $('.approve_task_btn').on('click', function(){
       },
       error:function(err){
       }
-    })
-    
-  } else {
-   
+    }) 
   }  
 })
 
@@ -435,6 +456,9 @@ $('.hr-send-btn').on('click', function(){
 
 $('#user-search-btn').on('click',function(){
   let query= $('#user-search').val()
+  if (query==''){
+    query="*"
+  }
   $.ajax({
     url:'/admin/search_user',
     method:'GET',

@@ -3,6 +3,7 @@
 # PdfsController class
 class PdfsController < ApplicationController
   include PdfsHelper
+  before_action :check_session
   def generate_pdf
     @task = Task.find(params[:id])
     @sub_tasks = @task.sub_tasks

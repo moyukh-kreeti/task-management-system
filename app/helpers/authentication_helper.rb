@@ -4,9 +4,8 @@
 module AuthenticationHelper
   def find_or_create_user(user_info)
     user = User.find_by_email(user_info.info.email)
-
     if user
-      user.update(employee_id: user_info.uid)
+      user.update_columns(employee_id: user_info.uid)
     else
       flash[:danger] = 'You are not authorized to login'
     end

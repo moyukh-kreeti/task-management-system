@@ -12,7 +12,6 @@ class Task < ApplicationRecord
   validates :repeat_interval, presence: true
   validates :task_importance, presence: true
   validates :description, presence: true
-  validates :next_notification_date, presence: true
 
   def self.index_data
     __elasticsearch__.create_index! force: true

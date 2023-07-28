@@ -6,6 +6,7 @@ class DashboardController < ApplicationController
   include DashboardHelper
 
   before_action :current_user, :all_notifications
+  before_action :check_session, except: [:index]
 
   def index
     redirect_to authentication_login_path unless session[:user_id].present?
@@ -24,8 +25,8 @@ class DashboardController < ApplicationController
 
   def assigntask
     @active_window = 'assigntask'
-    @task_category = TaskCategory.all
-    @all_users ||= User.all
+    @task_category = TaskCategory.all.order(:task_name)
+    @all_users ||= User.all.order(:name)
     @all_assigned_tasks = Task.all.where(assign_by: @user.employee_id).order(:task_approval).page(params[:page]).per(10)
   end
 
@@ -33,8 +34,9 @@ class DashboardController < ApplicationController
     @active_window = 'adminpanel'
     @total_user = User.all.count
     @all_verified_task = Task.all.where(task_approval: true).where(sended_to_hr: false)
-    @all_users = User.all.page(params[:page]).per(6)
-    @all_task_categories = TaskCategory.all
+    @all_users = User.all.page(params[:page]).order(:name).per(6)
+    @all_task_categories = TaskCategory.order(:task_name)
+    @all_users_with_roles = User.order(:name)
   end
 
   def hrpanel

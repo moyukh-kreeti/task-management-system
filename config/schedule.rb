@@ -24,5 +24,7 @@ set :environment, 'development'
 set :output, './log/cron_log.log'
 every 1.days do
   runner 'SchedulingReminderNotificationJob.new.perform'
-  # runner 'Task.msg'
+end
+every 1.days do
+  runner 'ScheduleReminderBeforeOneWeekJob.new.perform'
 end

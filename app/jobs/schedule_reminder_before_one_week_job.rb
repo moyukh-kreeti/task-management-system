@@ -4,10 +4,10 @@
 class ScheduleReminderBeforeOneWeekJob < ApplicationJob
   queue_as :default
 
-  def perform(current_user, task_user, task)
-    return unless task.Completed?
-
-    send_notification(current_user, task_user.employee_id,
-                      "Your task with task name: #{task.task_name} is still need to be done")
+  def perform
+    tasks = Task.all.where.not(status: 2).where(task_date: Date.today - 7.days)
+    tasks.each do |task|
+      send_reminder(task.user.employee_id, "You have only one week remaining to complete the task : #{task.task_name}")
+    end
   end
 end

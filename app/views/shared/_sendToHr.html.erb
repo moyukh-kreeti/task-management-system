@@ -26,6 +26,14 @@
             </thead>
             <tbody id="verified_task_list">
 
+               <% if @all_verified_task.count == 0  %>
+                <tr>
+                <td colspan="8" class="text-center">
+                  No Approved Task available
+                </td>
+                </tr>
+              <% end  %>
+
               <% @all_verified_task.each do |task| %>
                 <tr id="verified-task-<%= task.id%>">
                   <td>

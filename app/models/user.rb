@@ -10,7 +10,6 @@ class User < ApplicationRecord
   validates :surname, presence: true
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
-  paginates_per 6
 
   settings do
     mappings dynamic: false do
@@ -50,7 +49,7 @@ class User < ApplicationRecord
     HRD: 1,
     Admin: 2
   }
-  has_many :task
+  has_many :task, dependent: :destroy
   has_one_attached :image
   has_many :notification, dependent: :destroy
 end

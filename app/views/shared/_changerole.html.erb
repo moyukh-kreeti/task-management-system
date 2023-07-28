@@ -23,7 +23,7 @@
               </tr>
             </thead>
             <tbody id="employee_list_2">
-              <% @all_users.each do |item| %>
+              <% @all_users_with_roles.each do |item| %>
               <tr id="<%= item.id%>">
                 <td><%=item.name+" "+item.surname%></td>
                 <td id="roles-<%=item.id%>"><%=item.roles%></td>

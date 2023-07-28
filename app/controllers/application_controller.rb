@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
     @user ||= User.find_by(employee_id: session[:user_id])
   end
 
+  def check_session
+    if session[:user_id] == nil
+      redirect_to root_path
+    end
+  end
+
   def all_notifications
     @notifications ||= @user.notification.all.where(read_status: false)
   end

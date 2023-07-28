@@ -3,6 +3,8 @@
 # rubocop:disable all
 Rails.application.routes.draw do
   root 'dashboard#index'
+  get 'superuser/add/adminuser', to: 'authentication#add_admin_user'
+  post 'superuser/add/adminuser', to: 'authentication#add_user'
   get 'tasks/index'
   get 'assign_task/addTask'
   get 'admin/index'

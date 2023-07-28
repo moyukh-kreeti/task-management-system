@@ -1,4 +1,7 @@
 $('#my-<%= status%>-task-list').empty()
+<% if records.count == 0  %>
+$('#my-<%= status%>-task-list').append(`<h3>No such Task found</h3>`)
+<% end  %>
 <% records.each do |rc|  %>
 
 $('#my-<%= status%>-task-list').append(`<%= render partial:"shared/taskItems", :locals => {:task => rc}%>`)

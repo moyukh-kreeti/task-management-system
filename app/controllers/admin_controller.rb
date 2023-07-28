@@ -2,7 +2,7 @@
 
 # AdminController class
 class AdminController < ApplicationController
-  before_action :current_user
+  before_action :check_session, :current_user
 
   def add_user
     @user = User.create(name: people_params[:fname], surname: people_params[:lname], email: people_params[:email],

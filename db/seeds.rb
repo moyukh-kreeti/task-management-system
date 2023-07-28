@@ -35,12 +35,14 @@ end
   user_id = rand(1..10)
   task_category_id = rand(1..10)
   status = 0
+  repeat_interval = rand(1..6)
   description = Faker::Lorem.paragraph(sentence_count: 3)
   Task.create!(
     task_name:,
     task_date:,
     task_time:,
     task_importance:,
+    repeat_interval:,
     user_id:,
     task_category_id:,
     status:,

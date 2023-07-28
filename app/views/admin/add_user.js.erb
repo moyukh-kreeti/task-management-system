@@ -11,8 +11,8 @@ clear_input()
 $('#employee_list').append(`<tr>
                   <td><%=@user.name+" "+@user.surname%></td>
                   <td><%=@user.roles%></td>
-                  <td>10</td>
-                  <td>10</td>
+                  <td><%= @user.task.where.not(status: 2).count %></td>
+                  <td><%= @user.task.where(status: 1).count %></td>
                 </tr>`)
 $('#employee_list_2').append(`<tr id="<%= @user.id%>">
                 <td><%=@user.name+" "+@user.surname%></td>

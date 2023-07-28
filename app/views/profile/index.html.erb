@@ -3,20 +3,11 @@
 <div class="row p-3">
 
   <div class="col col-md-6 d-flex flex-column justify-content-center" style="align-items: center;">
-    <%# binding.pry %>
     <%if(@user.image.present?)%>
     <%= image_tag @user.image, {class: "rounded-circle carausal-img"}%>
     <%else%>
     <%= image_tag "user.png", {class: "rounded-circle carausal-img",alt: "Hi"}%>
     <%end%>
-    <%# <button class="profile-pic-add" id="change_pic">
-    <i class="fa-solid fa-cloud-arrow-up"></i>
-    </button> %>
-     <%#= button_to "",class: "profile-pic-add" do%>
-      <%# <i class="fa-solid fa-cloud-arrow-up"></i> %>
-     <%# end %>
-     <%# <input type="file" name="image" id="take_pic"style="display:none" accept="image/*"> %>
-
     <%= form_with model: User.new, local: true ,url: profile_uploadimage_path do |f| %>
       <div class="input-group mb-3">
       <%= f.file_field :image ,{style: "display:none",id: "take_pic"}%>
@@ -25,11 +16,8 @@
       <div class="profile-pic-add" id="change_pic">
         <i class="fa-solid fa-cloud-arrow-up"></i>
       </div>
-
-       <%= f.submit "", class: "btn btn-primary m-auto",id: "submit_btn",style: "display:none" %>
-        
+       <%= f.submit "", class: "btn btn-primary m-auto",id: "submit_btn",style: "display:none" %>   
     <% end %>
-
   </div>
   <div class="col col-md-6  justify-content-center m-auto">
 
