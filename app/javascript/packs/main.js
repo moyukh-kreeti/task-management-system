@@ -40,29 +40,49 @@ $('#add-admin-user-to-db').on('click', function (){
   let _fname=$('#input-fname-admin').val()
   let _lname=$('#input-lname-admin').val()
   let _email=$('#input-email-admin').val()
-  const user={
-    fname:_fname,
-    lname:_lname,
-    email:_email
+
+  if(_fname!=''&& _lname!=''&& _email!=''){
+    if(String(_email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    )){
+
+      const user={
+        fname:_fname,
+        lname:_lname,
+        email:_email
+      }
+    
+      $.ajax({
+        url: '/superuser/add/adminuser',
+        method: 'POST',
+        data: { info: user, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
+        success: function(response) {
+          if(response.status == true){
+            alert('Successfully added admin user. Please log in to the system with that google account')
+            window.location='/'
+          }
+          else{
+            alert('Something error has accured')
+          }
+        },
+        error: function(xhr, status, error) {
+      
+        }
+        });
+      
+    }
+    else{
+      alert('Please provide a valid email')
+    }
+    
+  }
+  else{
+    alert('Please fill all the fields')
   }
 
-  $.ajax({
-    url: '/superuser/add/adminuser',
-    method: 'POST',
-    data: { info: user, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
-    success: function(response) {
-      if(response.status == true){
-        alert('Successfully added admin user. Please log in to the system with that google account')
-        window.location='/'
-      }
-      else{
-        alert('Something error has accured')
-      }
-    },
-    error: function(xhr, status, error) {
-  
-    }
-    });
+
 })
 
 

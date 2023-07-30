@@ -26,7 +26,11 @@ class AuthenticationController < ApplicationController
     redirect_to root_path
   end
 
-  def add_admin_user; end
+  def add_admin_user
+    return unless session[:user_id]
+
+    redirect_to root_path
+  end
 
   def add_user
     @user = User.create(name: people_params[:fname], surname: people_params[:lname], email: people_params[:email],
