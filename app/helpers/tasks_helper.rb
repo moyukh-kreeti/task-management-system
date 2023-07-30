@@ -102,14 +102,14 @@ module TasksHelper
     end
   end
 
-  def filter_tasks_by_day(tasks, day, day_param)
-    return tasks if day_param == 3
+  def filter_tasks_by_day(tasks, day)
+    return tasks if day == 3
 
     tasks.where('DATE(task_date) = ?', day)
   end
 
-  def filter_tasks_by_priority(tasks, priority, priority_param)
-    return tasks if priority_param == 3
+  def filter_tasks_by_priority(tasks, priority)
+    return tasks if priority == 3
 
     tasks.where(task_importance: priority)
   end

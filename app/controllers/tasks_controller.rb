@@ -80,8 +80,8 @@ class TasksController < ApplicationController
     priority = priority_generator
     day = calculate_day(day_param)
     mytasks = filter_tasks_by_identification(identify)
-    mytasks = filter_tasks_by_day(mytasks, day, day_param)
-    mytasks = filter_tasks_by_priority(mytasks, priority, priority_param)
+    mytasks = filter_tasks_by_day(mytasks, day)
+    mytasks = filter_tasks_by_priority(mytasks, priority)
     respond_to do |format|
       format.js { render locals: { identification: identify, task: mytasks } }
     end
@@ -94,7 +94,7 @@ class TasksController < ApplicationController
       task.save
       TaskApprovalNotificationJob.perform_later(task, current_user)
     end
-    
+
     respond_to do |format|
       format.js { render locals: { task: } }
     end
