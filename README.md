@@ -14,6 +14,22 @@ The versions required are
 * yarn version 1.22.19
 * elasticsearch version 7.17.11
 * redis-server version 6.0.16
+
+##
+
+### Instalation guide
+
+For elasticsearch instalation follow this below guide
+
+[Elasticsearch Installation](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-elasticsearch-on-ubuntu-18-04)
+
+For instalation of redis server
+
+[Redis server Instalation](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-redis-on-ubuntu-18-04)
+
+##
+
+### Steps for running the application
   
 The correct versions of the above-mentioned software should be installed on your local system for running the application.
 
@@ -47,7 +63,7 @@ whenever --update-crontab
 
 [To add the first admin user](http://localhost:3000/superuser/add/adminuser)
 
-#### 5. Then Log in to the system through that email address added at the above link
+#### 5. Then Log in to the system through that google account which email is added to the above  added at the above link
 
 #### Then admin can add more user to login to the system by adding user to admin panel
 
