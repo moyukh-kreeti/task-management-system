@@ -154,12 +154,12 @@
         </div>
         <div class="form-group mt-3">
           <label for="task-date">Day task to be performed</label>
-          <input type="date" class="form-control" id="task-date" placeholder="Task Date" />
+          <input type="date" class="form-control" id="task-date" name="task-date" onfocus="this.showPicker()" placeholder="Task Date" />
           <p id="task-date-error" class="text-danger"></p>
         </div>
         <div class="form-group mt-3">
           <label for="task-time">Time task to be performed</label>
-          <input type="time" class="form-control" id="task-time" placeholder="Task Time" />
+          <input type="time" class="form-control" id="task-time" placeholder="Task Time" onfocus="this.showPicker()" />
           <p id="task-time-error" class="text-danger"></p>
         </div>
         <div class="form-group mt-3">
