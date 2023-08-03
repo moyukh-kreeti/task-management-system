@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+
+ @media only screen and (max-width: 980px){
+  .side-responsive{
+    display: none;
+  }
+  #navbarNavDropdown{
+    visibility: visible;
+  }
+ }
+ @media only screen and (min-width: 981px){
+  #navbarNavDropdown{
+    visibility: hidden;
+  }
+ }
+
