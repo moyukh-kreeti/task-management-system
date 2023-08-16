@@ -282,14 +282,6 @@ function check_validation(task_name,task_des,task_category,task_date,task_time,a
     $('#task-date-error').text("Field Can not be empty")
     valid=false
   }
-  else{
-    var select_date=new Date(task_date)
-    var today=new Date()
-    if (select_date<today){
-      $('#task-date-error').text("Please select a Valid Date (From tomorrow onwards)")
-      valid=false
-    }
-  }
   if(task_time==''){
     $('#task-time-error').text("Field Can not be empty")
     valid=false
