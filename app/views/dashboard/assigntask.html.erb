@@ -69,7 +69,7 @@
                         <%=task.task_date.strftime("%A, %B %d, %Y") if task.task_date !=nil%>
                       </td>
                       <td>
-                        <%=task.task_date.strftime("%H:%M %p") if task.task_date !=nil%>
+                        <%=task.task_time.strftime("%H:%M %p") if task.task_date !=nil%>
                       </td>
                       <td>
                         <%= task.user.name+" "+task.user.surname %></td>
@@ -155,7 +155,7 @@
         </div>
         <div class="form-group mt-3">
           <label for="task-date">Day task to be performed</label>
-          <input type="date" class="form-control" id="task-date" name="task-date" onfocus="this.showPicker()"
+          <input type="date" class="form-control" id="task-date" min="<%= Date.tomorrow%>" name="task-date" onfocus="this.showPicker()"
             placeholder="Task Date" />
           <p id="task-date-error" class="text-danger"></p>
         </div>
