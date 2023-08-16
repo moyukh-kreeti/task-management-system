@@ -163,8 +163,6 @@ function makeAdmin(_id){
 }
 
 function makeHR(_id){
-
-
   $.ajax({
 
     url:'/admin/make_hr',
@@ -211,7 +209,6 @@ function removeCategory(_id){
 
   })
 }
-
 
 $('#assign-task-to-user').on('click', function(){
 
@@ -261,10 +258,8 @@ $('#assign-task').on('click',function(){
   
       }
     })
+
   }
-
-
-
 })
 
 function check_validation(task_name,task_des,task_category,task_date,task_time,assign_to,task_priority,notification_interval){
@@ -318,12 +313,28 @@ function refresh_assign_task_model(){
   $('#repeat-interval-error').text('')
 }
 
-
+let sub_task_count=0;
 $('#add-subtask').on('click', function(){
+  add_sub_task()
+})
 
+$('#sub-task-input').keypress(function (e) {
+  var key = e.which;
+  if(key == 13)  // the enter key code
+  {
+    add_sub_task()
+  }
+});
+
+function add_sub_task(){
   let sub_task=$('#sub-task-input').val();
-  $('#sub-task-list').append(`<li class="list-group-item d-flex justify-content-between align-items-start">${sub_task} <a class="btn btn-danger"><i class="fa fa-trash"></i></a></li>`);
+  $('#sub-task-list').append(`<li class="list-group-item d-flex justify-content-between align-items-start" id="sub-task-${sub_task_count}">${sub_task} <a class="btn btn-danger del-sub-task" id="${sub_task_count}"><i class="fa fa-trash"></i></a></li>`);
+  sub_task_count=sub_task_count+1
   $('#sub-task-input').val('')
+}
+
+$(document).on('click','.del-sub-task',function(e){
+  $('#sub-task-'+$(this).attr('id')).remove()
 })
 
 $(document).on('change','.task-status-change', function(){
@@ -343,6 +354,7 @@ $(document).on('change','.task-status-change', function(){
     }
   })
 })
+
 $(document).on('change','.subtask-status-change', function(){
   let data={
     id: $(this)[0].id,

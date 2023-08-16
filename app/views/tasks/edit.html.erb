@@ -28,9 +28,19 @@
       <div class="card mb-4 custom-card p-3 ">
       <h3 class="text-center">Attachments</h3>
       <div class="d-flex flex-row justify-content-center align-items-center">
-      <% @task.attachments.each do |pic|  %>
-          <%= image_tag pic, {class: "m-2 p-2",style: "height:200px; width:200px",alt: "Hi"}%>
-          <% end %>
+          <% @task.attachments.each do |pic|  %>
+          <% if pic.blob.content_type.include?("image")  %>
+          <% timestamp = Time.now.strftime('%Y%m%d%H%M%S') %>
+          <% filename = "image_#{timestamp}.jpg"   %>
+          <%= link_to  url_for(pic.blob) , download: true  do %>
+          <%= image_tag pic, {class: "m-2 p-2",style: "height:100px; width:100px",alt: "Hi"}%>
+          <% end  %>
+          <% else  %>
+         <%= link_to  url_for(pic.blob), download: true  do %>
+          <%= image_tag 'file.png', {class: "m-2 p-2",style: "height:100px; width:100px",alt: "Hi"}%>
+          <% end  %>
+          <% end  %>
+      <% end %>
       </div>
           
       </div>

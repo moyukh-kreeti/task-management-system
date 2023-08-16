@@ -38,6 +38,7 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
     task.update(update_params)
     task.save
+    redirect_to dashboard_assigntask_path
   end
 
   def add_attachments
