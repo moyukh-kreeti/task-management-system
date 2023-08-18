@@ -56,7 +56,7 @@ RSpec.describe User, type: :model do
 
   describe 'indexing' do
     it 'indexes data in Elasticsearch' do
-      expect(User.__elasticsearch__).to receive(:create_index!).with(force: true)
+      expect(User.__elasticsearch__).to receive(:create_index!)
       expect(User.__elasticsearch__).to receive(:import).with(force: true)
       User.index_data
     end
