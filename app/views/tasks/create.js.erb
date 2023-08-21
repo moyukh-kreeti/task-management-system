@@ -1,3 +1,13 @@
+<% if task %>
+  $('#task-name').val('')
+  $('#task-category').val('');
+  $('#task-date').val('')
+  $('#task-time').val('')
+  $('#description').val('')
+  $('#assign-to').val('')
+  $('#task-priority').val('')
+  $("#sub-task-list").empty();
+<% end  %>
 $('#close-modal').trigger('click')
 $('#assigned_task_list').append(` <tr>
                   <td>

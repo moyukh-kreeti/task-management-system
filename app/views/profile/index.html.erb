@@ -10,7 +10,7 @@
     <%end%>
     <%= form_with model: User.new, local: true ,url: profile_uploadimage_path do |f| %>
       <div class="input-group mb-3">
-      <%= f.file_field :image ,{style: "display:none",id: "take_pic"}%>
+      <%= f.file_field :image ,{style: "display:none",id: "take_pic",accept: "image/*"}%>
       </div>
      
       <div class="profile-pic-add" id="change_pic">

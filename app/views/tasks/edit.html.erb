@@ -9,11 +9,11 @@
         <%= form_with model: @task, local: true ,url: task_path(@task) do |f| %>
           <div class="form-group mb-3">
            <label for="task-date">Day task to be performed </label>
-          <%= f.date_field :task_date ,{class: "form-control",id: "task-date",min: Date.tomorrow}%>
+          <%= f.date_field :task_date ,{class: "form-control",id: "task-date",min: Date.tomorrow,onfocus: "this.showPicker()"}%>
           </div>
           <div class="form-group mb-3">
           <label for="task-time">Time task to be performed </label>
-          <%= f.time_field :task_time ,{class: "form-control",id: "task-time"}%>
+          <%= f.time_field :task_time ,{class: "form-control",id: "task-time",onfocus: "this.showPicker()"}%>
           </div>
           <%= f.submit "Edit", class: "btn btn-primary m-auto",id: "submit_btn" %>
             
