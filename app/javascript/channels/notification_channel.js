@@ -23,13 +23,13 @@ document.addEventListener('turbolinks:load', () => {
     received(data){ 
       let count=Number($('#notification-count').text())
       $('#notification-count').text(count+1)
-      $('#notification-list').append(` <li>
+      $('#notification-list').append(`<a href="${data.path}" style="text-decoration: none; color: black;"> <li>
       <div class="card">
         <div class="card-body">
           <p class="card-text">${data.message}</p>
         </div>
       </div>
-    </li>`)
+    </li></a>`)
       $('#mark-as-read').removeClass('d-none')
     }
   });

@@ -2,7 +2,7 @@
 
 # ProfileController class
 class ProfileController < ApplicationController
-  before_action :check_session, :current_user, :all_notifications
+  before_action :check_session, :current_user, :all_notifications, :all_notifications_type
   def index; end
 
   def uploadimage

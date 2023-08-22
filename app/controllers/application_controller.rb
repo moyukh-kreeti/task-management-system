@@ -28,5 +28,13 @@ class ApplicationController < ActionController::Base
       'completed' => 2
     }
   end
+
+  def all_notifications_type
+    @notifications_types={
+      0=>dashboard_mytask_path,
+      1=>dashboard_adminpanel_path,
+      2=>dashboard_hrpanel_path
+    }
+  end
 end
 # rubocop:enable all

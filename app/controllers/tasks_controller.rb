@@ -2,7 +2,7 @@
 
 # TasksController class
 class TasksController < ApplicationController
-  before_action :check_session, :current_user, :all_notifications
+  before_action :check_session, :current_user, :all_notifications, :all_notifications_type
   helper_method :change_task_status, :help_method
   include ApplicationHelper
   include TasksHelper
@@ -93,7 +93,7 @@ class TasksController < ApplicationController
     if task.status_for_database == 2
       task.task_approval = true
       task.save
-      TaskApprovalNotificationJob.perform_later(task, current_user)
+      TaskApprovalNotificationJob.perform_later(task, current_user, @notifications_types[1])
     end
 
     respond_to do |format|

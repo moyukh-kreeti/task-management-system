@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
 
   before_action :current_user
   before_action :check_session, except: [:index]
-  before_action :all_notifications, except: [:index]
+  before_action :all_notifications, :all_notifications_type, except: [:index]
 
   def index
     redirect_to authentication_login_path unless session[:user_id].present?

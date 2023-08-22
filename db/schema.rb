@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # rubocop:disable all
-ActiveRecord::Schema.define(version: 20_230_719_084_119) do
+ActiveRecord::Schema.define(version: 20_230_822_060_638) do
   enable_extension 'plpgsql'
 
   create_table 'active_storage_attachments', force: :cascade do |t|
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20_230_719_084_119) do
     t.bigint 'user_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.integer 'notification_type', default: 0
     t.index ['user_id'], name: 'index_notifications_on_user_id'
   end
 

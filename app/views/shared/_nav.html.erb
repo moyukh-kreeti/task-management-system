@@ -53,6 +53,7 @@
           aria-labelledby="dropdownMenuButton1">
 
           <% @notifications.each do |item| %>
+            <a href="<%= @notifications_types[item.notification_type]%>" style="text-decoration: none; color: black;">
             <li>
               <div class="card mt-2">
                 <div class="card-body">
@@ -63,7 +64,7 @@
                 </div>
               </div>
             </li>
-
+            </a>
             <% end %>
               <button class="btn btn-warning mark-read <%=@notifications.count.positive? ? "" : " d-none"%>" value=""
                 id="mark-as-read" >Mark all as read</button>

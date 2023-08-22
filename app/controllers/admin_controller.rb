@@ -44,7 +44,7 @@ class AdminController < ApplicationController
     task = Task.find(params[:id])
     task.sended_to_hr = true
     task.save
-    TaskSendToHrDepartmentJob.perform_later(task, current_user)
+    TaskSendToHrDepartmentJob.perform_later(task, current_user, all_notifications_type[2])
     respond_to do |format|
       format.js { render locals: { task: } }
     end
