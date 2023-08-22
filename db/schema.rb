@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 # rubocop:disable all
-ActiveRecord::Schema.define(version: 20_230_822_060_638) do
+ActiveRecord::Schema.define(version: 20_230_822_082_729) do
   enable_extension 'plpgsql'
 
   create_table 'active_storage_attachments', force: :cascade do |t|
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20_230_822_060_638) do
     t.bigint 'task_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.string 'uid'
     t.index ['task_id'], name: 'index_sub_tasks_on_task_id'
   end
 
@@ -77,6 +78,7 @@ ActiveRecord::Schema.define(version: 20_230_822_060_638) do
     t.datetime 'next_notification_date'
     t.boolean 'task_approval', default: false
     t.boolean 'sended_to_hr', default: false
+    t.string 'uid'
     t.index ['task_category_id'], name: 'index_tasks_on_task_category_id'
     t.index ['user_id'], name: 'index_tasks_on_user_id'
   end

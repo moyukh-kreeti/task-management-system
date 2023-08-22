@@ -7,7 +7,12 @@
           <p class="text-center" style="font-size:1.5rem">Welcome to task management system try to login here with Google Account</p>
           <div style="width:50%;display:flex;justify-content:center;margin:auto;">
             <%= button_to  '/auth/google_oauth2/',data:{turbo:false},style:"border:none" do%>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width=50/>
+               <div class="google-btn">
+                <div class="google-icon-wrapper">
+                  <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                </div>
+                <p class="btn-text"><b>Log in With Google</b></p>
+              </div>
             <%end%>
           </div>
         </div>

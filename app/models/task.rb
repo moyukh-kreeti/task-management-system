@@ -4,6 +4,7 @@
 class Task < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+  after_create :create_uid
 
   validates :task_name, presence: true
   validates :task_category, presence: true
@@ -24,6 +25,7 @@ class Task < ApplicationRecord
       indexes :description, type: :text, analyzer: :english
       indexes :status, type: :integer
       indexes :user_id, type: :integer
+      indexes :uid, type: :text
     end
   end
 
@@ -32,7 +34,8 @@ class Task < ApplicationRecord
       task_name:,
       description:,
       status: Task.statuses[status],
-      user_id:
+      user_id:,
+      uid:
     }
   end
 
@@ -40,7 +43,7 @@ class Task < ApplicationRecord
     wildcards_query = query.split.map { |term| "*#{term}*" }.join(' ')
     response = search({ query: {
                         bool: {
-                          must: [{ query_string: { query: wildcards_query, fields: %w[task_name description] } },
+                          must: [{ query_string: { query: wildcards_query, fields: %w[task_name description uid] } },
                                  { match: { user_id: id } }],
                           filter: { terms: { status: [status] } }
                         }
@@ -70,5 +73,11 @@ class Task < ApplicationRecord
       5 => 6.months,
       6 => 1.years
     }
+  end
+
+  def create_uid
+    user_id = user.id
+    self.uid = format('Task_%<timestamp>d%<user_id>03d%<id>03d', timestamp: Time.now.to_i, user_id:, id:)
+    save
   end
 end

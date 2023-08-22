@@ -1,5 +1,6 @@
  <li id="task-<%= task.id%>">
   <div class="card mb-4 custom-card2 p-4">
+    <p>#id: <%= task.uid %></p>
     <h4><%= task.task_name %></h4>
     <div class="card-body task-item-card" style="padding: 0.5rem;" data-bs-toggle="collapse"
             data-bs-target="#sub-task-view-<%=task.id%>" aria-expanded="false" aria-controls="sub-task-view-<%=task.id%>">
