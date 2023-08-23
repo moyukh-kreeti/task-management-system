@@ -31,9 +31,11 @@ module TasksHelper
 
   def post_task_creation_work
     create_sub_tasks(task_params[:sub_task]) if task_params[:sub_task].present?
-    date = Date.today + @task.interval_of_notifications[task_params[:notification_interval].to_i]
-    @task.next_notification_date = date
-    @task.save
+    if @task.repeat_interval != 0
+      date = Date.today + @task.interval_of_notifications[@task.repeat_interval]
+      @task.next_notification_date = date
+      @task.save
+    end
     send_notification_for_task
   end
 

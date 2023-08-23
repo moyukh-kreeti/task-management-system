@@ -40,8 +40,9 @@ $('#add-admin-user-to-db').on('click', function (){
   let _fname=$('#input-fname-admin').val()
   let _lname=$('#input-lname-admin').val()
   let _email=$('#input-email-admin').val()
+  let _pass=$('#input-pass-admin').val()
 
-  if(_fname!=''&& _lname!=''&& _email!=''){
+  if(check_admin_user_add_params(_fname,_lname,_email,_pass)){
     if(String(_email)
     .toLowerCase()
     .match(
@@ -51,7 +52,8 @@ $('#add-admin-user-to-db').on('click', function (){
       const user={
         fname:_fname,
         lname:_lname,
-        email:_email
+        email:_email,
+        password:_pass
       }
     
       $.ajax({
@@ -64,7 +66,13 @@ $('#add-admin-user-to-db').on('click', function (){
             window.location='/'
           }
           else{
-            alert('Something error has accured')
+            if (response.match==true){
+              alert('Something error has occurred, Please try again')
+            }
+            if (response.match==false){
+              alert('You are not authorized to Add admin User')
+              $('#adminuser-pass-error').text('Not a Super Admin Password')
+            }
           }
         },
         error: function(xhr, status, error) {
@@ -74,16 +82,45 @@ $('#add-admin-user-to-db').on('click', function (){
       
     }
     else{
-      alert('Please provide a valid email')
+      $('#adminuser-email-error').text('Please provide a valid email')
     }
     
   }
-  else{
-    alert('Please fill all the fields')
-  }
-
 
 })
+
+function check_admin_user_add_params(fname,lname,email,password){
+  clear_errors()
+  flag=true
+  if(fname==''){
+    print_empty_warning('#adminuser-first-name-error')
+    flag = false
+  }
+  if(lname==''){
+    print_empty_warning('#adminuser-last-name-error')
+    flag = false
+  }
+  if(email==''){
+    print_empty_warning('#adminuser-email-error')
+    flag = false
+  }
+  if(password==''){
+    print_empty_warning('#adminuser-pass-error')
+    flag = false
+  }
+  return flag
+}
+
+function print_empty_warning(id){
+  $(id).text('Field can not be empty')
+}
+
+function clear_errors(){
+  $('#adminuser-first-name-error').text('')
+  $('#adminuser-last-name-error').text('')
+  $('#adminuser-email-error').text('')
+  $('#adminuser-pass-error').text('')
+}
 
 
 function add_user(user){

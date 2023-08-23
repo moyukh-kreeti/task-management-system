@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   @@welcome_flash = false
   @active_window = 'home'
   helper_method :current_user
+  ADMIN_PASSWORD = 'tasksuperadmin@123'
 
   def current_user
     @user ||= User.find_by(employee_id: session[:user_id])
