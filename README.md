@@ -59,9 +59,13 @@ rails s
 whenever --update-crontab
 ```
 
-#### 6. Then, As mentioned in the requirement to open the application one user should be added by the admin first then he/she can log in to the system by the Google account added by the admin. So to create an admin user firstly visit the below link
+#### 6. Then, As mentioned in the requirement to open the application one user should be added by the admin first then he/she can log in to the system by the Google account added by the admin. So to create an admin user firstly visit the below link use the Super Admin Password to add a Admin User 
 
 [To add the first admin user](http://localhost:3000/superuser/add/adminuser)
+
+```
+Super Admin Password is : tasksuperadmin@123
+```
 
 #### 5. Then Log in to the system through that Google account which email is added to the above  added at the above link
 
