@@ -35,9 +35,10 @@
 
         <div class="col-1">
           <button class=" drop-down-btn " id="drop-down-<%=task.id%>" type="button" data-bs-toggle="collapse"
-            data-bs-target="#sub-task-view-<%=task.id%>" aria-expanded="false" aria-controls="sub-task-view-<%=task.id%>">
-            <%= image_tag "drop_down.png" , {class: "rounded-circle" ,alt: "Hi", style: "height:32px;width:32px" } %>
+            data-bs-target="#sub-task-view-<%=task.id%>" aria-expanded="false" aria-controls="sub-task-view-<%=task.id%>"> 
+           <i class="fa fa-caret-down"></i> Expand
           </button>
+          <button class="btn"></button>
         </div>
       </div>
       <div class="collapse" id="sub-task-view-<%=task.id%>">
