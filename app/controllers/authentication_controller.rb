@@ -4,8 +4,11 @@ require 'httparty'
 # AuthenticationController class
 class AuthenticationController < ApplicationController
   include AuthenticationHelper
+  skip_before_action :verify_authenticity_token, only: %i[logout login create]
 
-  def login; end
+  def login
+    redirect_to root_path if session[:user_id]
+  end
 
   def create
     user_info = request.env['omniauth.auth']
@@ -21,7 +24,7 @@ class AuthenticationController < ApplicationController
 
   def logout
     HTTParty.get("https://accounts.google.com/o/oauth2/revoke?token=#{session[:access_token]}")
-    reset_sessions
+    reset_session
     redirect_to root_path
   end
 

@@ -22,7 +22,7 @@ module TasksHelper
   end
 
   def send_notification_for_task
-    msg = "Task Has been assigned to you by #{current_user.name} #{current_user.surname}"
+    msg = "Task(#id: #{@task.uid}) Has been assigned to you by #{current_user.name} #{current_user.surname}"
     send_notification(@task_user.employee_id, msg)
     redirect_url = root_url.chop + dashboard_mytask_path
     TaskMailer.with(to: @task_user.email, task: @task, assign_user: current_user,

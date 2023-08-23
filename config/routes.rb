@@ -38,5 +38,8 @@ Rails.application.routes.draw do
   scope '/dashboard/hrpanel' do
     get 'generate_pdf', to: 'pdfs#generate_pdf'
   end
+  match '*unmatched', to: 'application#not_found', layout: false, via: :all, constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }
 end
 # rubocop:enable all

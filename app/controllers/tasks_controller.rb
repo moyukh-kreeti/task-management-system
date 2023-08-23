@@ -2,7 +2,7 @@
 
 # TasksController class
 class TasksController < ApplicationController
-  before_action :check_session, :current_user, :all_notifications, :all_notifications_type
+  before_action :check_session, :current_user, :notifications, :all_notifications_type
   helper_method :change_task_status, :help_method
   include ApplicationHelper
   include TasksHelper
@@ -21,11 +21,19 @@ class TasksController < ApplicationController
     @active_window = 'assigntask'
     @task = Task.find(params[:id])
     @sub_tasks = @task.sub_tasks.all
+    return unless @task.assign_by != session[:user_id]
+
+    render file: Rails.public_path.join('401.html'), status: :unauthorized
+    nil
   end
 
   def edit
     @active_window = 'assigntask'
     @task = Task.find(params[:id])
+    return unless @task.assign_by != session[:user_id]
+
+    render file: Rails.public_path.join('401.html'), status: :unauthorized
+    nil
   end
 
   def destroy

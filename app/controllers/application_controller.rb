@@ -7,18 +7,20 @@ class ApplicationController < ActionController::Base
   @active_window = 'home'
   helper_method :current_user
   ADMIN_PASSWORD = 'tasksuperadmin@123'
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActionController::RoutingError, with: :render_not_found
 
   def current_user
     @user ||= User.find_by(employee_id: session[:user_id])
   end
 
   def check_session
-    if session[:user_id] == nil
-      redirect_to root_path
-    end
+    return unless session[:user_id].nil?
+
+    redirect_to root_path
   end
 
-  def all_notifications
+  def notifications
     @notifications ||= @user.notification.all.where(read_status: false)
   end
 
@@ -31,11 +33,19 @@ class ApplicationController < ActionController::Base
   end
 
   def all_notifications_type
-    @notifications_types={
-      0=>dashboard_mytask_path,
-      1=>dashboard_adminpanel_path,
-      2=>dashboard_hrpanel_path
+    @notifications_types = {
+      0 => dashboard_mytask_path,
+      1 => dashboard_adminpanel_path,
+      2 => dashboard_hrpanel_path
     }
+  end
+
+  def render_not_found
+    render file: Rails.public_path.join('404.html'), status: :not_found
+  end
+
+  def not_found
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 end
 # rubocop:enable all
