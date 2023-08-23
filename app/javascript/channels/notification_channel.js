@@ -31,6 +31,7 @@ document.addEventListener('turbolinks:load', () => {
       </div>
     </li></a>`)
       $('#mark-as-read').removeClass('d-none')
+      $('#empty_notification').addClass('d-none')
     }
   });
 });

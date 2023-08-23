@@ -49,15 +49,16 @@
           </span>
 
         </a>
-        <ul class="dropdown-menu" style="width:300px;height:300px;overflow:auto;padding:1.5rem" id="notification-list"
+        <ul class="dropdown-menu nav-notification p-2" id="notification-list"
           aria-labelledby="dropdownMenuButton1">
-
+           <button class="btn btn-warning mark-read <%=@notifications.count.positive? ? "" : " d-none"%>" value=""
+                id="mark-as-read" >Mark all as read</button>
+            <li class=" <%=@notifications.count.positive? ?  " d-none" : "" %>" id="empty_notification">No Notification Yet</li>
           <% @notifications.each do |item| %>
             <a href="<%= @notifications_types[item.notification_type]%>" style="text-decoration: none; color: black;">
             <li>
               <div class="card mt-2">
                 <div class="card-body">
-
                   <p class="card-text">
                     <%= item.message %>
                   </p>
@@ -66,11 +67,7 @@
             </li>
             </a>
             <% end %>
-              <button class="btn btn-warning mark-read <%=@notifications.count.positive? ? "" : " d-none"%>" value=""
-                id="mark-as-read" >Mark all as read</button>
-
         </ul>
-
       </div>
       <% end %>
 
