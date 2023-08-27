@@ -26,3 +26,50 @@
 .completed{
     background-color: #28f808;
 }
+
+.image-area {
+    position: relative;
+    
+}
+.image-area img{
+  max-width: 100%;
+  height: auto;
+}
+.remove-image {
+display: none;
+position: absolute;
+top: -10px;
+right: -10px;
+border-radius: 10em;
+padding: 2px 6px 3px;
+text-decoration: none;
+font: 700 21px/20px sans-serif;
+background: #555;
+border: 3px solid #fff;
+color: #FFF;
+}
+.remove-image:hover {
+  background: #4af3f6;
+  padding: 3px 7px 5px;
+  top: -11px;
+  right: -11px;
+}
+.remove-image:active {
+  background: #E54E4E;
+  top: -10px;
+  right: -11px;
+}
+
+.attach-image {
+  aspect-ratio: 1/1;
+  width:100px
+}
+
+.sub-task-container{
+  max-height: 20rem;
+  overflow: overlay;
+}
+
+.sub-tasks-border{
+  border-left: 2px solid black !important; 
+}

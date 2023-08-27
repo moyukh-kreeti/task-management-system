@@ -13,9 +13,18 @@
       <div class="modal-body">
         <ul class="list-group" id="task-list">
           <% @all_task_categories.each do |item| %>
-          <li class="list-group-item d-flex justify-content-between align-items-center" id="task-<%=item.id%>">
-            <%= item.task_name %>
-            <i class="fa fa-trash btn btn-danger del-task-category" value="<%= item.id%>"></i>
+          <li class="list-group-item d-flex flex-column justify-content-between align-items-center" id="task-<%=item.id%>">
+            <div class="d-flex justify-content-between align-items-center w-100" id="category-list-<%= item.id%>">
+              <p class="align-items-center mb-0"><%= item.task_name %></p>
+              <div>
+              <i class="fa fa-edit btn btn-success edit-task-category" value="<%= item.id%>"></i>
+              <i class="fa fa-trash btn btn-danger del-task-category" value="<%= item.id%>"></i>
+              </div>
+            </div>
+            <div class="input-group mt-3 d-none" id="category-edit-container-<%= item.id%>">
+              <input type="text" class="form-control"  aria-label="Recipient's username" aria-describedby="button-addon2" id="category-edit-input-<%= item.id%>" value="<%= item.task_name%>">
+              <button class="btn btn-outline-success category-edit-save" type="button" value="<%= item.id%>">Save</button>
+            </div>
           </li>
           <% end %>
         </ul>

@@ -29,6 +29,7 @@ class DashboardController < ApplicationController
     @task_category = TaskCategory.all.order(:task_name)
     @all_users ||= User.all.order(:name)
     @all_assigned_tasks = Task.all.where(assign_by: @user.employee_id).order(:task_approval).page(params[:page]).per(10)
+    @all_assigned_tasks = @all_assigned_tasks.order('DATE(task_date) ASC').order(task_importance: :desc)
   end
 
   def adminpanel

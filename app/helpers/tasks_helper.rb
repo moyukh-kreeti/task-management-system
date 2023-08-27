@@ -114,4 +114,10 @@ module TasksHelper
 
     tasks.where(task_importance: priority)
   end
+
+  def delete_attachments
+    task = Task.find(params[:task_id])
+    task.attachments.find(params[:blob_id]).destroy
+    redirect_to edit_task_path(task)
+  end
 end

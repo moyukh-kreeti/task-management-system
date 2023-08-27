@@ -1,7 +1,5 @@
-<div class="min-height-300 bg-primary position-absolute" style="height: 20rem; width: 100%"></div>
-
-
-<div class="container-fluid mt-5" style="position: relative">
+<div class="min-height-300 bg-primary position-absolute blue-bar"></div>
+<div class="container-fluid mt-5 position-relative">
   <div class="row">
     <div class="col-lg-12">
       <div class="card mb-4 custom-card p-3 task-cards">
@@ -32,13 +30,19 @@
           <% if pic.blob.content_type.include?("image")  %>
           <% timestamp = Time.now.strftime('%Y%m%d%H%M%S') %>
           <% filename = "image_#{timestamp}.jpg"   %>
-          <%= link_to  url_for(pic.blob) , download: true  do %>
-          <%= image_tag pic, {class: "m-2 p-2",style: "height:100px; width:100px",alt: "Hi"}%>
+          <div class="image-area">
+            <%= link_to  url_for(pic.blob) , download: true  do %>
+            <%= image_tag pic, {class: "m-2 p-2 attach-image",alt: "Hi"}%>
           <% end  %>
+            <a class="remove-image d-inline" href="<%= tasks_delete_attachments_path(task_id: @task, blob_id: pic)%>" data-method="delete" data-confirm="Are you sure?">&#215;</a>
+          </div>
           <% else  %>
-         <%= link_to  url_for(pic.blob), download: true  do %>
-          <%= image_tag 'file.png', {class: "m-2 p-2",style: "height:100px; width:100px",alt: "Hi"}%>
-          <% end  %>
+          <div class="image-area">
+              <%= link_to  url_for(pic.blob), download: true  do %>
+              <%= image_tag 'file.png', {class: "m-2 p-2 attach-image",alt: "Hi"}%>
+              <% end  %>
+            <a class="remove-image d-inline" href="<%= tasks_delete_attachments_path(task_id: @task, blob_id: pic)%>" data-method="delete" data-confirm="Are you sure?">&#215;</a>
+          </div>
           <% end  %>
       <% end %>
       </div>
@@ -52,15 +56,12 @@
       <div class="card mb-4 custom-card p-3 task-cards">
       <h3 class="text-center">Add Attachments</h3>
 
-       <%= form_with model: Task.new, local: true ,url: tasks_add_attachments_path(id: @task) do |f| %>
+       <%= form_with model: Task.new, local: true ,url: tasks_add_attachments_path(id: @task),id: "attachment_form" do |f| %>
           <div class="form-group mb-3">
           <%= f.file_field :attachments ,{class: "form-control",id: "upload_attachments"}%>
           </div>
-
-          <%= f.submit "Add Attachments", class: "btn btn-primary m-auto",id: "submit_btn" %>
-            
+          <input type="submit" name="commit" value="Add Attachments" class="btn btn-primary m-auto" id="submit_btn">
         <% end %>
-
       </div>
     </div>
   </div>

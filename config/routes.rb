@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   post 'admin/make_admin'
   post 'admin/make_hr'
   post 'admin/add_task_categories'
+  post 'admin/update_task_categories'
   patch 'admin/send_to_hr'
   delete 'admin/remove_task_categories'
   scope '/dashboard/assigntask' do
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
   post 'tasks/change_subtask_status'
   get 'tasks/apply_filters'
   post 'tasks/add_attachments'
+  delete 'tasks/delete_attachments'
   get 'tasks/show'
   get 'tasks/search'
   scope '/dashboard/hrpanel' do

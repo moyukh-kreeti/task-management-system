@@ -21,7 +21,7 @@ class TasksController < ApplicationController
     @active_window = 'assigntask'
     @task = Task.find(params[:id])
     @sub_tasks = @task.sub_tasks.all
-    return unless @task.assign_by != session[:user_id]
+    return unless @task.assign_by != session[:user_id] && @task.user.employee_id != session[:user_id]
 
     render file: Rails.public_path.join('401.html'), status: :unauthorized
     nil

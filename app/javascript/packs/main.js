@@ -176,9 +176,40 @@ $('#add-task-caregory').on('click',function(){
   
 })
 
-$('.del-task-category').on('click',function(){
+$(document).on('click','.del-task-category',function(e){
   console.log($(this).attr('value'))
   removeCategory($(this).attr('value'))
+})
+
+$(document).on('click','.edit-task-category',function(e){
+  let item_id = $(this).attr('value')
+  $('#category-list-'+item_id).addClass('d-none')
+  $('#category-edit-container-'+item_id).removeClass('d-none')
+})
+
+$(document).on('click','.category-edit-save',function(e){
+  let item_id = $(this).attr('value')
+  let category_name = $('#category-edit-input-'+item_id).val()
+  $('#category-list-'+item_id+' p').text(category_name)
+  $('#category-list-'+item_id).removeClass('d-none')
+  $('#category-edit-container-'+item_id).addClass('d-none')
+
+  $.ajax({
+
+    url:'/admin/update_task_categories',
+    method:'POST',
+    data:{id: item_id, task_name: category_name,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    success:function(data){
+      if (data){
+        show_toast("Task Category Updated successfully")
+      }
+    },
+    error:function(err){
+
+    }
+
+  })
+
 })
 
 function makeAdmin(_id){
@@ -408,7 +439,6 @@ $(document).on('change','.subtask-status-change', function(){
   })
 })
 
-
 $(document).on('change','.day-filter', function(){
   check_filter($(this).attr('data'));
 })
@@ -489,7 +519,7 @@ $('.search-btn').on('click', function(){
   })
 })
 
-$('.approve_task_btn').on('click', function(){
+$(document).on('click','.approve_task_btn',function(){
   let _id = $(this).attr('data')
   if(confirm('Really approve the task?')) {
     $.ajax({
@@ -538,3 +568,15 @@ $('#user-search-btn').on('click',function(){
     }
   })
 })
+
+$(document).ready(function() {
+  $('#attachment_form').submit(function(event) {
+    const fileInput = $('#upload_attachments');
+    const submitBtn = $('#submit_btn');
+    if (!fileInput[0].files || !fileInput[0].files[0]) {
+      event.preventDefault();
+      alert('Please choose a file.');
+      
+    }
+  });
+});

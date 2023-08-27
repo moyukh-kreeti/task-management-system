@@ -40,6 +40,14 @@ class AdminController < ApplicationController
     respond_to(&:js)
   end
 
+  def update_task_categories
+    category = TaskCategory.find(params[:id])
+    category.task_name = params[:task_name]
+    category.save
+    status = true if category
+    render json: { status: }
+  end
+
   def send_to_hr
     task = Task.find(params[:id])
     task.sended_to_hr = true
