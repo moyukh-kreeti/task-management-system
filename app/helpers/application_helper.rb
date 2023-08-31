@@ -8,4 +8,8 @@ module ApplicationHelper
     user.save
     ActionCable.server.broadcast("notification_for_#{id}", { message: msg, path: dashboard_mytask_path.to_s })
   end
+
+  def task_show_highlighter
+    @active_window = (params[:k] == '1' ? 'assigntask' : 'mytask')
+  end
 end

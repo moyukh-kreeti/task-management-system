@@ -78,7 +78,7 @@
           <% timestamp = Time.now.strftime('%Y%m%d%H%M%S') %>
           <% filename = "image_#{timestamp}.jpg"   %>
           <%= link_to  url_for(pic.blob) , download: true  do %>
-          <%= image_tag 'image_file.png', {class: "m-2 p-2 attach-image",alt: "Hi"}%>
+          <%= image_tag pic, {class: "m-2 p-2 attach-image",alt: "Hi"}%>
           <% end  %>
           <% else  %>
          <%= link_to  url_for(pic.blob), download: true  do %>
