@@ -197,7 +197,7 @@ $(document).on('click','.category-edit-save',function(e){
   $.ajax({
 
     url:'/admin/update_task_categories',
-    method:'POST',
+    method:'PATCH',
     data:{id: item_id, task_name: category_name,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
       if (data){

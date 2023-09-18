@@ -1,5 +1,6 @@
 <% if task.status_for_database == 2  %>
 $("#approve_task_btn<%= task.id%>").empty()
+$("#approve_task_btn<%= task.id%>").append(` <button class="btn btn-outline-success approve_task_btn" disabled>Approved &#10003</button>`)
  show_toast("Task has been approved")
 <% else  %>
   alert("Task is yet to complete")

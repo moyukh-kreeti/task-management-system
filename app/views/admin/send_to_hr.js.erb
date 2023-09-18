@@ -1,2 +1,4 @@
 $('#verified-task-<%= task.id%>').remove()
+let a = $('#total-verified-task').text()
+$('#total-verified-task').text(Number(a)-1);
 $('#sendTaskModal').modal('hide')
