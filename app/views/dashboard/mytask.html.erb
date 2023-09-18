@@ -25,7 +25,7 @@
               <%= render partial:"shared/filterNav" ,:locals => {:status => "assigned"}%>
                 <div>
                   <% if @assigned_mytasks.count == 0 %>
-                    <h3 class="text-center" id="my-assigned-empty-task">No Task Assigned</h3>
+                    <h3 class="text-center no-assigned-task" id="my-assigned-empty-task">No Task Assigned</h3>
                   <% end  %>
                   <ul class="list-unstyled" id="my-assigned-task-list">
                     <% @assigned_mytasks.each do |task| %>
@@ -43,7 +43,7 @@
               <%= render partial:"shared/filterNav",:locals => {:status => "working"} %>
               <div>
                   <% if @working_mytasks.count == 0 %>
-                    <h3 class="text-center" id="my-working-empty-task">No Task Assigned</h3>
+                    <h3 class="text-center no-assigned-task" id="my-working-empty-task">No Task Assigned</h3>
                    <% end  %>
                   <ul class="list-unstyled" id="my-working-task-list">
                     <% @working_mytasks.each do |task| %>
@@ -60,7 +60,7 @@
               <%= render partial:"shared/filterNav",:locals => {:status => "completed"} %>
               <div>
                   <% if @completed_mytasks.count == 0 %>
-                    <h3 class="text-center" id="my-completed-empty-task">No Task Assigned</h3>
+                    <h3 class="text-center no-assigned-task" id="my-completed-empty-task">No Task Assigned</h3>
                   <% end  %>
                   <ul class="list-unstyled" id="my-completed-task-list">
                     <% @completed_mytasks.each do |task| %>
