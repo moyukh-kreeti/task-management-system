@@ -5,15 +5,10 @@ class ProfileController < ApplicationController
   before_action :check_session, :current_user, :notifications, :all_notifications_type
   def index; end
 
-  def uploadimage
+  def update
     @user = User.find_by(employee_id: session[:user_id])
-    # @user.image.attach!(params[:user][:image])
     @user.image = params[:user][:image]
-    if @user.save(validate: false)
-      puts 'Image uploaded successfully!'
-    else
-      puts 'Error uploading image'
-    end
+    @user.save(validate: false)
     redirect_to profile_index_path
   end
 end

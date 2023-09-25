@@ -7,55 +7,19 @@ class AdminController < ApplicationController
   def add_user
     @user = User.create(name: people_params[:fname], surname: people_params[:lname], email: people_params[:email],
                         roles: people_params[:roles].to_i)
-    @total_user = User.all.count
+    @total_user = User.count
     respond_to(&:js)
   end
 
-  def make_admin
-    if @user.Admin?
-      emp = User.find(params[:id])
-      emp.roles = 2
-      emp.save!
-    end
+  def change_role
+    User.user_params_update(params[:id], { roles: params[:role].to_i }) if @user.Admin?
     respond_to(&:js)
-  end
-
-  def make_hr
-    if @user.Admin?
-      emp = User.find(params[:id])
-      emp.roles = 1
-      emp.save!
-    end
-    respond_to(&:js)
-  end
-
-  def add_task_categories
-    @task_category = TaskCategory.create(task_name: params[:data])
-
-    respond_to(&:js)
-  end
-
-  def remove_task_categories
-    TaskCategory.find(params[:id]).destroy
-    respond_to(&:js)
-  end
-
-  def update_task_categories
-    category = TaskCategory.find(params[:id])
-    category.task_name = params[:task_name]
-    category.save
-    status = true if category
-    render json: { status: }
   end
 
   def send_to_hr
-    task = Task.find(params[:id])
-    task.sended_to_hr = true
-    task.save
+    task = Task.update_task_params(params[:id], { sended_to_hr: true })
     TaskSendToHrDepartmentJob.perform_later(task, current_user, all_notifications_type[2])
-    respond_to do |format|
-      format.js { render locals: { task: } }
-    end
+    respond_to { |format| format.js { render locals: { task: } } }
   end
 
   def search_user
@@ -64,6 +28,8 @@ class AdminController < ApplicationController
       format.js { render locals: { result: } }
     end
   end
+
+  private
 
   def people_params
     params.require(:info).permit(:fname, :lname, :email, :roles)

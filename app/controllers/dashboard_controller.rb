@@ -26,24 +26,23 @@ class DashboardController < ApplicationController
 
   def assigntask
     @active_window = 'assigntask'
-    @task_category = TaskCategory.all.order(:task_name)
-    @all_users ||= User.all.order(:name)
-    @all_assigned_tasks = Task.all.where(assign_by: @user.employee_id).order(:task_approval).page(params[:page]).per(10)
-    @all_assigned_tasks = @all_assigned_tasks.order('DATE(task_date) ASC').order(task_importance: :desc)
+    @task_category = TaskCategory.all
+    @all_users ||= User.all
+    @all_assigned_tasks = Task.all_assigned_tasks(@user.employee_id, params[:page])
   end
 
   def adminpanel
     @active_window = 'adminpanel'
-    @total_user = User.all.count
-    @all_verified_task = Task.all.where(task_approval: true).where(sended_to_hr: false)
-    @all_users = User.all.page(params[:page]).order(:name).per(6)
-    @all_task_categories = TaskCategory.order(:task_name)
-    @all_users_with_roles = User.order(:name)
+    @total_user = User.count
+    @all_verified_task = Task.approaved_tasks
+    @all_users = User.page_wise_user(params[:page])
+    @all_task_categories = TaskCategory.all
+    @all_users_with_roles = User.all
   end
 
   def hrpanel
     @active_window = 'hrpanel'
-    @all_sended_task = Task.all.where(sended_to_hr: true)
+    @all_sended_task = Task.snded_to_hr
   end
 
   def mark_all_read

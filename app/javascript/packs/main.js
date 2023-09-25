@@ -149,13 +149,13 @@ function show_toast(msg){
 
 $('.make-hr').on('click',function(){
 
-  makeHR($(this).val())
+  change_role($(this).val(),1)
   
 })
 
 $('.make-admin').on('click',function(){
 
-  makeAdmin($(this).val())
+  change_role($(this).val(),2)
 
 })
 
@@ -196,7 +196,7 @@ $(document).on('click','.category-edit-save',function(e){
 
   $.ajax({
 
-    url:'/admin/update_task_categories',
+    url:'/admin/task_category/'+item_id,
     method:'PATCH',
     data:{id: item_id, task_name: category_name,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
@@ -212,15 +212,19 @@ $(document).on('click','.category-edit-save',function(e){
 
 })
 
-function makeAdmin(_id){
-
+function change_role(_id,_role){
   $.ajax({
 
-    url:'/admin/make_admin',
-    method:'POST',
-    data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
+    url:'/admin/change_role',
+    method:'PATCH',
+    data:{id: _id,role: _role,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
-      show_toast("Admin created successfully")
+      if(_role=="2"){
+        show_toast("Admin created successfully")
+      }
+      else{
+        show_toast("HRD created successfully")
+      }
     },
     error:function(err){
 
@@ -228,28 +232,12 @@ function makeAdmin(_id){
 
   })
 
-}
-
-function makeHR(_id){
-  $.ajax({
-
-    url:'/admin/make_hr',
-    method:'POST',
-    data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
-    success:function(data){
-      show_toast("HRD created successfully")
-    },
-    error:function(err){
-      
-    }
-
-  })
 }
 
 function addCategory(category){
   $.ajax({
 
-    url:'/admin/add_task_categories',
+    url:'/admin/task_category',
     method:'POST',
     data:{data: category,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
@@ -265,7 +253,7 @@ function addCategory(category){
 function removeCategory(_id){
 
   $.ajax({
-    url:'/admin/remove_task_categories',
+    url:'/admin/task_category/'+_id,
     method:'DELETE',
     data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
@@ -412,7 +400,7 @@ $(document).on('change','.task-status-change', function(){
   }
   $.ajax({
     url:'/tasks/change_task_status',
-    method:'POST',
+    method:'PATCH',
     data:{task_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
       
@@ -430,7 +418,7 @@ $(document).on('change','.subtask-status-change', function(){
   }
   $.ajax({
     url:'/tasks/change_subtask_status',
-    method:'POST',
+    method:'PATCH',
     data:{subtask_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
     },
@@ -454,7 +442,7 @@ function check_filter(status){
   let data={
     identify:status
   }
-
+  data['day']=_day
   if(_day=="1"){
 
     if(_priority!="3"){
@@ -463,15 +451,12 @@ function check_filter(status){
   }
   else{
     
-    data['day']=_day
+    
     if(_priority!="3"){
       data['priority']=_priority
     }
   }
-
-  console.log(data)
-
-
+  
   $.ajax({
     url:'/tasks/apply_filters',
     method:'GET',

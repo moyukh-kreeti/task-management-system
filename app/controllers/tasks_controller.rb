@@ -12,16 +12,14 @@ class TasksController < ApplicationController
     date_time = parse_date_time(task_params[:task_date], task_params[:task_time])
     @task = create_task(date_time)
     post_task_creation_work
-    respond_to do |format|
-      format.js { render locals: { task: @task } }
-    end
+    respond_to { |format| format.js { render locals: { task: @task } } }
   end
 
   def show
     task_show_highlighter
-    @task = Task.find(params[:id])
-    @sub_tasks = @task.sub_tasks.all
-    return unless @task.assign_by != session[:user_id] && @task.user.employee_id != session[:user_id]
+    @task = Task.find_authorized_task(params[:id], session[:user_id])[0]
+    @sub_tasks = @task&.sub_tasks
+    return if @task.present?
 
     render file: Rails.public_path.join('401.html'), status: :unauthorized
     nil
@@ -45,69 +43,49 @@ class TasksController < ApplicationController
   def update
     task = Task.find(params[:id])
     task.update(update_params)
-    task.save
     redirect_to dashboard_assigntask_path
   end
 
   def add_attachments
     task = Task.find(params[:id])
     task.attachments.attach(params[:task][:attachments])
-    task.save
     redirect_to edit_task_path(task)
   end
 
   def search
     make_search_params
     records = Task.search_tasks(@query, @status, current_user.id)
-    respond_to do |format|
-      format.js { render locals: { records:, status: params[:search][:status] } }
-    end
+    respond_to { |format| format.js { render locals: { records:, status: params[:search][:status] } } }
   end
 
   def change_task_status
-    task = @user.task.find(params[:task_data][:id].to_i)
-    status = params[:task_data][:status].to_i
-    fn_st = update_task_status(task, status)
+    fn_st = update_task_status
     respond_to do |format|
-      format.js { render locals: { final_status: fn_st, task: } }
+      format.js { render locals: { final_status: fn_st[:status], task: fn_st[:tasks][0] } }
     end
   end
 
   def change_subtask_status
-    sub_task = find_subtask(params[:subtask_data][:id])
-    update_subtask_status(sub_task, params[:subtask_data][:status])
-    stt = sub_task.task
-    final_status = update_task_status_after_subtask(stt, params[:subtask_data][:status])
-    respond_to do |format|
-      format.js { render locals: { final_status:, task: stt, sub_task: } }
-    end
+    sub_task = SubTask.update_subtask_params(sub_tasks_params[:id].to_i,
+                                             { status: sub_tasks_params[:status].to_i })
+    final_status = task_status_changed(sub_task[0].task_id)
+    respond_to { |format| format.js { render locals: { final_status:, task: @task, sub_task: sub_task[0] } } }
   end
 
   def apply_filters
     identify = params[:filters][:identify]
-    day_param = day_param_generator
-    priority = priority_generator
-    day = calculate_day(day_param)
-    mytasks = filter_tasks_by_identification(identify)
-    mytasks = filter_tasks_by_day(mytasks, day)
-    mytasks = filter_tasks_by_priority(mytasks, priority)
-    respond_to do |format|
-      format.js { render locals: { identification: identify, task: mytasks } }
-    end
+    mytasks = Task.filter_user(@user.id).filter_status(identify)
+                  .filter_day(calculate_day).filter_priority(priority_generator)
+    respond_to { |format| format.js { render locals: { identification: identify, task: mytasks } } }
   end
 
   def approve
-    task = Task.find(params[:id].to_i)
-    if task.status_for_database == 2
-      task.task_approval = true
-      task.save
-      TaskApprovalNotificationJob.perform_later(task, current_user, @notifications_types[1])
-    end
-
-    respond_to do |format|
-      format.js { render locals: { task: } }
-    end
+    @task = Task.find(params[:id].to_i)
+    approave_task
+    respond_to { |format| format.js { render locals: { task: @task } } }
   end
+
+  private
 
   def task_params
     params.require(:task_data).permit(:task_name, :task_category, :task_date, :task_des, :task_time, :task_attachments,
@@ -116,5 +94,9 @@ class TasksController < ApplicationController
 
   def update_params
     params.require(:task).permit(:task_date, :task_time, :attachments)
+  end
+
+  def sub_tasks_params
+    params.require(:subtask_data).permit(:id, :status, :attachments)
   end
 end

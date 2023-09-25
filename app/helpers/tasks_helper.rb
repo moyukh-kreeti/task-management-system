@@ -44,34 +44,19 @@ module TasksHelper
     @status = all_task_status[params[:search][:status]]
   end
 
-  def update_task_status(task, status)
-    remain_count = task.sub_tasks.where(status: [0, 1]).count
-    if status == 2 && remain_count.positive?
-      true
+  def update_task_status
+    task_id = params[:task_data][:id]
+    remain_count = SubTask.pending_subtask_count(task_id)
+    if params[:task_data][:status].to_i == 2 && remain_count.positive?
+      { status: true, tasks: [] }
     else
-      task.status = status
-      task.save
-      false
+      { tasks: Task.update_task_params(task_id, { status: params[:task_data][:status].to_i }), status: false }
     end
   end
 
-  def find_subtask(subtask_id)
-    SubTask.find(subtask_id.to_i)
-  end
-
-  def update_subtask_status(sub_task, status)
-    sub_task.status = status.to_i
-    sub_task.save
-  end
-
-  def update_task_status_after_subtask(task, subtask_status)
-    if subtask_status.to_i == 1 && task.status_for_database.zero?
-      task.status = 1
-      task.save
-      true
-    else
-      false
-    end
+  def task_status_changed(task_id)
+    @task = Task.find(task_id)
+    @task.updated_at > (Time.now - 1.minutes)
   end
 
   def day_param_generator
@@ -82,42 +67,29 @@ module TasksHelper
     params[:filters][:priority].present? ? params[:filters][:priority].to_i : 3
   end
 
-  def calculate_day(day_param)
+  def calculate_day
+    day_param = params[:filters][:day].present? ? params[:filters][:day].to_i : 1
     case day_param
     when 0
       Date.tomorrow
+    when 1
+      Date.today
     when 2
       Date.yesterday
-    else
-      Date.today
     end
-  end
-
-  def filter_tasks_by_identification(identify)
-    if identify == 'assigned'
-      @user.task.all.where(status: 0)
-    elsif identify == 'working'
-      @user.task.all.where(status: 1)
-    else
-      @user.task.all.where(status: 2)
-    end
-  end
-
-  def filter_tasks_by_day(tasks, day)
-    return tasks if day == 3
-
-    tasks.where('DATE(task_date) = ?', day)
-  end
-
-  def filter_tasks_by_priority(tasks, priority)
-    return tasks if priority == 3
-
-    tasks.where(task_importance: priority)
   end
 
   def delete_attachments
     task = Task.find(params[:task_id])
     task.attachments.find(params[:blob_id]).destroy
     redirect_to edit_task_path(task)
+  end
+
+  def approave_task
+    return unless @task.status_for_database == 2
+
+    @task.task_approval = true
+    @task.save
+    TaskApprovalNotificationJob.perform_later(@task, current_user, @notifications_types[1])
   end
 end

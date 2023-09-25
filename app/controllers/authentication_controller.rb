@@ -11,15 +11,8 @@ class AuthenticationController < ApplicationController
   end
 
   def create
-    user_info = request.env['omniauth.auth']
-    @user = find_or_create_user(user_info)
-    if @user
-      handle_successful_login(user_info)
-      WelcomeMailer.with(to: @user.email, user: @user).welcome.deliver_later
-      redirect_to root_path
-    else
-      handle_failed_login
-    end
+    @user_info = request.env['omniauth.auth']
+    find_or_create_user
   end
 
   def logout
@@ -35,17 +28,11 @@ class AuthenticationController < ApplicationController
   end
 
   def add_user
-    if people_params[:password] == ADMIN_PASSWORD
-      @user = User.create(name: people_params[:fname], surname: people_params[:lname],
-                          email: people_params[:email], roles: 2)
-      match = true
-    else
-      match = false
-    end
-    respond_to do |format|
-      format.json { render json: { status: @user.present?, match: } }
-    end
+    response = check_and_create_admin_user(people_params)
+    respond_to { |format| format.json { render json: { status: @user.present?, match: response } } }
   end
+
+  private
 
   def people_params
     params.require(:info).permit(:fname, :lname, :email, :password)

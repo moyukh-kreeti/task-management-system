@@ -29,12 +29,12 @@
                 <td id="roles-<%=item.id%>"><%=item.roles%></td>
                 <td>
                   <div>
-                    <% if item.employee? %>
+                    <% if item.Employee? %>
                     <button type="button" id="make-hrd-<%=item.id%>" class="btn btn-outline-primary make-hr" value="<%= item.id%>" >
                       Make HRD
                     </button>
                     <% end %>
-                    <% if item.HRD? || item.employee? %>
+                    <% if item.HRD? || item.Employee? %>
                     <button type="button" id="make-admin-<%=item.id%>" class="btn btn-outline-primary make-admin" value="<%= item.id%>">
                       Make Admin
                     </button>

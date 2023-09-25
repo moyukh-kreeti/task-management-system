@@ -3,13 +3,27 @@
 require 'httparty'
 # User Model
 class User < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+  enum roles: {
+    Employee: 0,
+    HRD: 1,
+    Admin: 2
+  }
+  has_many :task, dependent: :destroy
+  has_one_attached :image
+  has_many :notification, dependent: :destroy
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL_REGEX }
   validates :roles, presence: true, numericality: { only_integer: true }
   validates :surname, presence: true
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+
+  default_scope { order(:name) }
+  scope :user_params_update, ->(id, update_params) { where(id:).update(update_params) }
+  scope :page_wise_user, ->(page_no) { page(page_no).per(6) }
 
   settings do
     mappings dynamic: false do
@@ -43,13 +57,4 @@ class User < ApplicationRecord
   end
 
   index_data
-
-  enum roles: {
-    employee: 0,
-    HRD: 1,
-    Admin: 2
-  }
-  has_many :task, dependent: :destroy
-  has_one_attached :image
-  has_many :notification, dependent: :destroy
 end

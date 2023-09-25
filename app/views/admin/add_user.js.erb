@@ -19,12 +19,12 @@ $('#employee_list_2').append(`<tr id="<%= @user.id%>">
                 <td id="roles-<%=@user.id%>"><%=@user.roles%></td>
                 <td>
                   <div>
-                    <% if @user.employee? %>
+                    <% if @user.Employee? %>
                     <button type="button" id="make-hrd-<%=@user.id%>" class="btn btn-outline-primary make-hr" value="<%= @user.id%>" >
                       Make HRD
                     </button>
                     <% end %>
-                    <% if @user.HRD? || @user.employee? %>
+                    <% if @user.HRD? || @user.Employee? %>
                     <button type="button" id="make-admin-<%=@user.id%>" class="btn btn-outline-primary make-admin" value="<%= @user.id%>">
                       Make Admin
                     </button>

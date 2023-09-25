@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   @@welcome_flash = false
   @active_window = 'home'
   helper_method :current_user
-  ADMIN_PASSWORD = 'tasksuperadmin@123'
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from ActionController::RoutingError, with: :render_not_found
 
@@ -21,6 +20,11 @@ class ApplicationController < ActionController::Base
   end
 
   def notifications
+    unless @user.present?
+      session[:user_id]=nil
+      redirect_to root_path
+      return
+    end
     @notifications ||= @user.notification.all.where(read_status: false)
   end
 

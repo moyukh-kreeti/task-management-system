@@ -1,6 +1,8 @@
 # frozen_string_literal: true
+
 # rubocop:disable all
-ActiveRecord::Schema.define(version: 20_230_822_082_729) do
+ActiveRecord::Schema.define(version: 20_230_925_121_817) do
+  # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
   create_table 'active_storage_attachments', force: :cascade do |t|
@@ -34,8 +36,8 @@ ActiveRecord::Schema.define(version: 20_230_822_082_729) do
 
   create_table 'notifications', force: :cascade do |t|
     t.integer 'sender_id'
-    t.text 'message'
-    t.boolean 'read_status'
+    t.text 'message', null: false
+    t.boolean 'read_status', default: false
     t.bigint 'user_id', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
@@ -44,8 +46,8 @@ ActiveRecord::Schema.define(version: 20_230_822_082_729) do
   end
 
   create_table 'sub_tasks', force: :cascade do |t|
-    t.string 'name'
-    t.integer 'status'
+    t.string 'name', null: false
+    t.integer 'status', default: 0
     t.text 'description'
     t.bigint 'task_id', null: false
     t.datetime 'created_at', precision: 6, null: false
@@ -55,13 +57,13 @@ ActiveRecord::Schema.define(version: 20_230_822_082_729) do
   end
 
   create_table 'task_categories', force: :cascade do |t|
-    t.string 'task_name'
+    t.string 'task_name', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
   end
 
   create_table 'tasks', force: :cascade do |t|
-    t.string 'task_name'
+    t.string 'task_name', null: false
     t.integer 'task_category'
     t.datetime 'task_date'
     t.datetime 'task_time'
@@ -101,5 +103,4 @@ ActiveRecord::Schema.define(version: 20_230_822_082_729) do
   add_foreign_key 'tasks', 'task_categories'
   add_foreign_key 'tasks', 'users'
 end
-
 # rubocop:enable all

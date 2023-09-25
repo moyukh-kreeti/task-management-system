@@ -8,7 +8,7 @@
     <%else%>
     <%= image_tag "user.png", {class: "rounded-circle carausal-img",alt: "Hi"}%>
     <%end%>
-    <%= form_with model: User.new, local: true ,url: profile_uploadimage_path do |f| %>
+    <%= form_with model: User.new, method: :put , local: true ,url: profile_path(1) do |f| %>
       <div class="input-group mb-3">
       <%= f.file_field :image ,{style: "display:none",id: "take_pic",accept: "image/*"}%>
       </div>
