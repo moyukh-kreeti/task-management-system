@@ -69,6 +69,13 @@ Super Admin Password is : tasksuperadmin@123
 
 #### 5. Then Log in to the system through that Google account which email is added to the above  added at the above link
 
+### Then to check the rspec report file run the following command
+
+```bash 
+xdg-open coverage/index.html
+
+```
+
 #### Then the admin can add more users to log in to the system by adding users to the admin panel
 
 
