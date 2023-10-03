@@ -18,9 +18,10 @@ module AuthenticationHelper
     if @user
       handle_successful_login
       WelcomeMailer.with(to: @user.email, user: @user).welcome.deliver_later
-      redirect_to root_path
+      true
     else
       handle_failed_login
+      false
     end
   end
 

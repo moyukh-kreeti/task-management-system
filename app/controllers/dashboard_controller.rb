@@ -28,7 +28,7 @@ class DashboardController < ApplicationController
     @active_window = 'assigntask'
     @task_category = TaskCategory.all
     @all_users ||= User.all
-    @all_assigned_tasks = Task.all_assigned_tasks(@user.employee_id, params[:page])
+    @all_assigned_tasks = Task.all_assigned_tasks(current_user.employee_id, params[:page])
   end
 
   def adminpanel
@@ -46,7 +46,7 @@ class DashboardController < ApplicationController
   end
 
   def mark_all_read
-    @notifications.each do |item|
+    notifications.each do |item|
       item.read_status = true
       item.save
     end

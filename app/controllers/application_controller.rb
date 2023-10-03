@@ -20,12 +20,12 @@ class ApplicationController < ActionController::Base
   end
 
   def notifications
-    unless @user.present?
+    unless current_user.present?
       session[:user_id]=nil
       redirect_to root_path
       return
     end
-    @notifications ||= @user.notification.all.where(read_status: false)
+    @notifications ||= current_user.notification.all.where(read_status: false)
   end
 
   def all_task_status

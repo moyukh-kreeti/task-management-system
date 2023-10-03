@@ -393,7 +393,15 @@ $(document).on('click','.del-sub-task',function(e){
   $('#sub-task-'+$(this).attr('id')).remove()
 })
 
-$(document).on('change','.task-status-change', function(){
+
+document.addEventListener('turbolinks:load', function() {
+  $(document).off('click', '.approve_task_btn', approveTaskHandler);
+  $(document).on('click', '.approve_task_btn', approveTaskHandler);
+  $(document).off('change', '.task-status-change', taskStatusChangeHandler);
+  $(document).on('change', '.task-status-change', taskStatusChangeHandler);
+});
+
+function taskStatusChangeHandler() {
   let data={
     id: $(this)[0].id,
     status: $(this).val()
@@ -403,13 +411,11 @@ $(document).on('change','.task-status-change', function(){
     method:'PATCH',
     data:{task_data:data ,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
     success:function(data){
-      
     },
     error:function(err){
-
     }
   })
-})
+}
 
 $(document).on('change','.subtask-status-change', function(){
   let data={
@@ -504,21 +510,27 @@ $('.search-btn').on('click', function(){
   })
 })
 
-$(document).on('click','.approve_task_btn',function(){
-  let _id = $(this).attr('data')
-  if(confirm('Really approve the task?')) {
+document.addEventListener('turbolinks:load', function() {
+  $(document).off('click', '.approve_task_btn', approveTaskHandler);
+  $(document).on('click', '.approve_task_btn', approveTaskHandler);
+});
+
+function approveTaskHandler() {
+  let _id = $(this).attr('data');
+  if (confirm('Really approve the task?')) {
     $.ajax({
-      url:'/dashboard/assigntask/approve_task',
-      method:'PATCH',
-      data:{id: _id,authenticity_token: $('meta[name="csrf-token"]').attr('content')},
-      success:function(data){
-       
+      url: '/dashboard/assigntask/approve_task',
+      method: 'PATCH',
+      data: { id: _id, authenticity_token: $('meta[name="csrf-token"]').attr('content') },
+      success: function (data) {
+        // Handle success if needed
       },
-      error:function(err){
+      error: function (err) {
+        // Handle error if needed
       }
-    }) 
-  }  
-})
+    });
+  }
+}
 
 $('#send-to-hr-btn').on('click', function(){
   $('#sendTaskModal').modal('show');

@@ -50,6 +50,10 @@ gem 'whenever', require: false
 
 gem 'prawn'
 
+gem 'rails-controller-testing'
+
+gem 'simplecov', require: false, group: :test
+
 # gem 'resque'
 
 # Reduces boot times through caching; required in config/boot.rb

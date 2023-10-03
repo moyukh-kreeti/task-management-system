@@ -3,7 +3,7 @@
 # TasksController class
 class TasksController < ApplicationController
   before_action :check_session, :current_user, :notifications, :all_notifications_type
-  helper_method :change_task_status, :help_method
+  helper_method :change_task_status
   include ApplicationHelper
   include TasksHelper
 
@@ -54,8 +54,8 @@ class TasksController < ApplicationController
 
   def search
     make_search_params
-    records = Task.search_tasks(@query, @status, current_user.id)
-    respond_to { |format| format.js { render locals: { records:, status: params[:search][:status] } } }
+    @records = Task.search_tasks(@query, @status, current_user.id)
+    respond_to { |format| format.js { render locals: { records: @records, status: params[:search][:status] } } }
   end
 
   def change_task_status
@@ -74,9 +74,9 @@ class TasksController < ApplicationController
 
   def apply_filters
     identify = params[:filters][:identify]
-    mytasks = Task.filter_user(@user.id).filter_status(identify)
-                  .filter_day(calculate_day).filter_priority(priority_generator)
-    respond_to { |format| format.js { render locals: { identification: identify, task: mytasks } } }
+    @mytasks = Task.filter_user(@user.id).filter_status(identify)
+                   .filter_day(calculate_day).filter_priority(priority_generator)
+    respond_to { |format| format.js { render locals: { identification: identify, task: @mytasks } } }
   end
 
   def approve

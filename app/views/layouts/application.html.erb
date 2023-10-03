@@ -17,7 +17,9 @@
 
     <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    
+    <% content_for :head do %>
+      <%= tag.link(rel: 'preload', href: asset_path('custom.css'), as: 'style', onload: 'this.onload=null;this.rel="stylesheet"') %>
+    <% end %>
 
   </head>
 

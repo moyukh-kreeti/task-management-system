@@ -12,7 +12,8 @@ class AuthenticationController < ApplicationController
 
   def create
     @user_info = request.env['omniauth.auth']
-    find_or_create_user
+    status = find_or_create_user
+    redirect_to root_path if status == true
   end
 
   def logout

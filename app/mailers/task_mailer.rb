@@ -18,6 +18,6 @@ class TaskMailer < ApplicationMailer
 
   def send_to_hr
     @task = params[:task]
-    mail(to: params[:to], subject: 'Assignment of Task')
+    mail(to: params[:to], subject: 'After Approval of Task download the Task file')
   end
 end
