@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-10-03T11:36:36+05:30">2023-10-03T11:36:36+05:30</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-10-16T13:23:12+05:30">2023-10-16T13:23:12+05:30</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  97.53%
+  97.37%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         2.73
+         2.72
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>1214</b> relevant lines,
-    <span class="green"><b>1184</b> lines covered</span> and
-    <span class="red"><b>30</b> lines missed. </span>
+    <b>1218</b> relevant lines,
+    <span class="green"><b>1186</b> lines covered</span> and
+    <span class="red"><b>32</b> lines missed. </span>
     (<span class="green">
-  97.53%
+  97.37%
 </span>
 )
   </div>
@@ -402,12 +402,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#f2c5355627467f089eab7ef07c2edec5f384a9cb" class="src_link" title="app/models/user.rb">app/models/user.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">60</td>
-            <td class="cell--number">31</td>
-            <td class="cell--number">31</td>
-            <td class="cell--number">0</td>
-            <td class="cell--number">10.39</td>
+            <td class="green strong cell--number t-file__coverage">94.29 %</td>
+            <td class="cell--number">68</td>
+            <td class="cell--number">35</td>
+            <td class="cell--number">33</td>
+            <td class="cell--number">2</td>
+            <td class="cell--number">9.26</td>
             
           </tr>
         
@@ -1636,7 +1636,7 @@
 
             
 
-            <code class="ruby">    @notifications ||= current_user.notification.all.where(read_status: false)</code>
+            <code class="ruby">    @notifications ||= current_user.notifications.all.where(read_status: false)</code>
           </li>
         </div>
       
@@ -5096,7 +5096,7 @@
 
             
 
-            <code class="ruby">    user.notification.create(sender_id: current_user.id, message: msg, read_status: false, notification_type: 0)</code>
+            <code class="ruby">    user.notifications.create(sender_id: current_user.id, message: msg, read_status: false, notification_type: 0)</code>
           </li>
         </div>
       
@@ -5926,7 +5926,7 @@
 
             
 
-            <code class="ruby">    current_user.task.where(status: 0).page(params[:page]).per(3)</code>
+            <code class="ruby">    current_user.tasks.where(status: 0).page(params[:page]).per(3)</code>
           </li>
         </div>
       
@@ -5970,7 +5970,7 @@
 
             
 
-            <code class="ruby">    current_user.task.where(status: 1).page(params[:page]).per(3)</code>
+            <code class="ruby">    current_user.tasks.where(status: 1).page(params[:page]).per(3)</code>
           </li>
         </div>
       
@@ -6014,7 +6014,7 @@
 
             
 
-            <code class="ruby">    current_user.task.where(status: 2).page(params[:page]).per(3)</code>
+            <code class="ruby">    current_user.tasks.where(status: 2).page(params[:page]).per(3)</code>
           </li>
         </div>
       
@@ -7557,7 +7557,7 @@
 
             
 
-            <code class="ruby">    @task_user.task.create(task_name: task_params[:task_name],</code>
+            <code class="ruby">    @task_user.tasks.create(task_name: task_params[:task_name],</code>
           </li>
         </div>
       
@@ -7568,7 +7568,7 @@
 
             
 
-            <code class="ruby">                           task_category: TaskCategory.find(task_params[:task_category]),</code>
+            <code class="ruby">                            task_category: TaskCategory.find(task_params[:task_category]),</code>
           </li>
         </div>
       
@@ -7579,7 +7579,7 @@
 
             
 
-            <code class="ruby">                           assign_by: @user.employee_id, task_importance: task_params[:task_importance].to_i,</code>
+            <code class="ruby">                            assign_by: @user.employee_id, task_importance: task_params[:task_importance].to_i,</code>
           </li>
         </div>
       
@@ -7590,7 +7590,7 @@
 
             
 
-            <code class="ruby">                           task_date: date_time, task_time: date_time,</code>
+            <code class="ruby">                            task_date: date_time, task_time: date_time,</code>
           </li>
         </div>
       
@@ -7601,7 +7601,7 @@
 
             
 
-            <code class="ruby">                           description: task_params[:task_des],</code>
+            <code class="ruby">                            description: task_params[:task_des],</code>
           </li>
         </div>
       
@@ -7612,7 +7612,7 @@
 
             
 
-            <code class="ruby">                           repeat_interval: task_params[:notification_interval].to_i, status: 0)</code>
+            <code class="ruby">                            repeat_interval: task_params[:notification_interval].to_i, status: 0)</code>
           </li>
         </div>
       
@@ -8600,7 +8600,7 @@
 
             
 
-            <code class="ruby">    user.notification.create(sender_id: current_user.id, message: msg, read_status: false, notification_type: type)</code>
+            <code class="ruby">    user.notifications.create(sender_id: current_user.id, message: msg, read_status: false, notification_type: type)</code>
           </li>
         </div>
       
@@ -8666,7 +8666,7 @@
 
             
 
-            <code class="ruby">    user.notification.create(message: msg, read_status: false)</code>
+            <code class="ruby">    user.notifications.create(message: msg, read_status: false)</code>
           </li>
         </div>
       
@@ -11846,7 +11846,7 @@
     <h3>app/models/user.rb</h3>
     <h4>
       <span class="green">
-  100.0%
+  94.29%
 </span>
 
       lines covered
@@ -11855,9 +11855,9 @@
     
 
     <div class="t-line-summary">
-      <b>31</b> relevant lines.
-      <span class="green"><b>31</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <b>35</b> relevant lines.
+      <span class="green"><b>33</b> lines covered</span> and
+      <span class="red"><b>2</b> lines missed.</span>
     </div>
 
     
@@ -12017,7 +12017,7 @@
 
             
 
-            <code class="ruby">  has_many :task, dependent: :destroy</code>
+            <code class="ruby">  has_many :tasks, dependent: :destroy</code>
           </li>
         </div>
       
@@ -12039,7 +12039,7 @@
 
             
 
-            <code class="ruby">  has_many :notification, dependent: :destroy</code>
+            <code class="ruby">  has_many :notifications, dependent: :destroy</code>
           </li>
         </div>
       
@@ -12518,6 +12518,94 @@
       
         <div>
           <li class="never" data-hits="" data-linenumber="60">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="61">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def pending_tasks_count</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="62">
+            
+            
+
+            
+
+            <code class="ruby">    tasks.where.not(status: 2).count</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="63">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="64">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="65">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  def working_tasks_count</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="66">
+            
+            
+
+            
+
+            <code class="ruby">    tasks.where(status: 1).count</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="67">
+            
+            
+
+            
+
+            <code class="ruby">  end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="68">
             
             
 
@@ -16878,7 +16966,7 @@
 
             
 
-            <code class="ruby">        expect(controller.notifications).to eq(user.notification.all.where(read_status: false))</code>
+            <code class="ruby">        expect(controller.notifications).to eq(user.notifications.all.where(read_status: false))</code>
           </li>
         </div>
       
@@ -29207,7 +29295,7 @@
 
             
 
-            <code class="ruby">      association = described_class.reflect_on_association(:task)</code>
+            <code class="ruby">      association = described_class.reflect_on_association(:tasks)</code>
           </li>
         </div>
       

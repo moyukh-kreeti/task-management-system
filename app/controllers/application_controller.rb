@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
       return
     end
-    @notifications ||= current_user.notification.all.where(read_status: false)
+    @notifications ||= current_user.notifications.all.where(read_status: false)
   end
 
   def all_task_status

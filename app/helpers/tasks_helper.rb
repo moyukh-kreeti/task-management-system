@@ -7,12 +7,12 @@ module TasksHelper
   end
 
   def create_task(date_time)
-    @task_user.task.create(task_name: task_params[:task_name],
-                           task_category: TaskCategory.find(task_params[:task_category]),
-                           assign_by: @user.employee_id, task_importance: task_params[:task_importance].to_i,
-                           task_date: date_time, task_time: date_time,
-                           description: task_params[:task_des],
-                           repeat_interval: task_params[:notification_interval].to_i, status: 0)
+    @task_user.tasks.create(task_name: task_params[:task_name],
+                            task_category: TaskCategory.find(task_params[:task_category]),
+                            assign_by: @user.employee_id, task_importance: task_params[:task_importance].to_i,
+                            task_date: date_time, task_time: date_time,
+                            description: task_params[:task_des],
+                            repeat_interval: task_params[:notification_interval].to_i, status: 0)
   end
 
   def create_sub_tasks(sub_tasks_params)

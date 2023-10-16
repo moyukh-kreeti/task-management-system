@@ -50,7 +50,7 @@ RSpec.describe ApplicationController, type: :controller do
       end
 
       it 'returns user notifications' do
-        expect(controller.notifications).to eq(user.notification.all.where(read_status: false))
+        expect(controller.notifications).to eq(user.notifications.all.where(read_status: false))
       end
     end
 

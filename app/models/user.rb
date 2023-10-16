@@ -11,9 +11,9 @@ class User < ApplicationRecord
     HRD: 1,
     Admin: 2
   }
-  has_many :task, dependent: :destroy
+  has_many :tasks, dependent: :destroy
   has_one_attached :image
-  has_many :notification, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :name, presence: true
@@ -57,4 +57,12 @@ class User < ApplicationRecord
   end
 
   index_data
+
+  def pending_tasks_count
+    tasks.where.not(status: 2).count
+  end
+
+  def working_tasks_count
+    tasks.where(status: 1).count
+  end
 end

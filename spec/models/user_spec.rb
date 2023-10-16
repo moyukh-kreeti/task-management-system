@@ -48,7 +48,7 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it 'has many tasks' do
-      association = described_class.reflect_on_association(:task)
+      association = described_class.reflect_on_association(:tasks)
       expect(association.macro).to eq(:has_many)
       expect(association.options[:dependent]).to eq(:destroy)
     end

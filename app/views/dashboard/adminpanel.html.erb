@@ -84,8 +84,8 @@
                       <td>
                         <%=item.name+" "+item.surname%></td>
                   <td><%=item.roles%></td>
-                  <td><%= item.task.where.not(status: 2).count %></td>
-                  <td><%= item.task.where(status: 1).count %></td>
+                  <td><%= item.pending_tasks_count %></td>
+                  <td><%= item.working_tasks_count%></td>
                 </tr>
                 <% end %>
               </tbody>
